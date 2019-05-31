@@ -1,0 +1,11 @@
+query {
+  content {
+    title
+    code
+    logo
+    sections
+    description
+    contact
+    footer
+  }
+}

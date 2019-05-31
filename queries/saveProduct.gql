@@ -1,0 +1,10 @@
+mutation($input: ProductInput!) {
+  updateContent(input: $input) {
+    title
+    logo
+    sections
+    description
+    contact
+    footer
+  }
+}
