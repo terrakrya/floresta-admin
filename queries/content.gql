@@ -1,11 +1,16 @@
 query {
-  content {
+	content {
+    id
+    banner
     title
-    code
-    logo
-    sections
+    subTitle
     description
-    contact
-    footer
+    logo
+    villageText
+    projectsText
+    villages {
+      name
+    }
+    mapLink
   }
 }

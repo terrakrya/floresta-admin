@@ -1,0 +1,16 @@
+mutation($input: ProjectInput!) {
+  saveProject(input: $input) {
+      id
+      name
+      slug
+      description
+      media
+      photos
+      category {
+        id
+      }
+      tags {
+        id
+      }
+  }
+}

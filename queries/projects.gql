@@ -1,0 +1,32 @@
+query {
+ projects {
+   id
+   createdAt
+   updatedAt
+   category {
+     id
+     createdAt
+     updatedAt
+     name
+     slug
+     photos
+     media
+     description
+   }
+   tags {
+     id
+     createdAt
+     updatedAt
+     name
+     slug
+     photos
+     media
+     description
+   }
+   name
+   slug
+   photos
+   media
+   description
+ }  
+}

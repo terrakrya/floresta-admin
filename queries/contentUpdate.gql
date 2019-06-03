@@ -1,21 +1,13 @@
 mutation($input: ContentInput!) {
   updateContent(input: $input) {
+    id
+    banner
     title
-    logo
-    sections
-    authorGuideline
+    subTitle
     description
-    scope
-    contact
-    footer
-    librarianInfo
-    privacyStatement
-    proofInstructions
-    publicationFrequency
-    purchaseArticleDescription
-    reviewGuidelines
-    waiverPolicy
-    updatedAt
-    createdAt
+    logo
+    villageText
+    projectsText
+    mapLink
   }
 }
