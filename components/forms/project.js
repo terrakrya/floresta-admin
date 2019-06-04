@@ -104,11 +104,11 @@ class IssueForm extends Component {
 
 	render() {
 		const { uploaded } = this.state;
-		const { classes, onSubmit, issue, publish } = this.props;
+		const { classes, onSubmit, project, publish } = this.props;
 
 		return (
 			<Form
-				initialValues={issue ? formatedIssue : {}}
+				initialValues={project ? formatedIssue : {}}
 				onSubmit={async (e) => {
 					let cleanList = {};
 					Object.keys(validInputList).map((valid) => {
@@ -133,16 +133,16 @@ class IssueForm extends Component {
 				render={({ handleSubmit, pristine, invalid, form: { change, blur } }) => (
 					<form onSubmit={handleSubmit}>
 						<Paper className={classes.root} elevation={1}>
-							<span>{issue && issue.key}</span>
-							<div className={classes.column}>
+							<span>{project && project.key}</span>
+							{/* <div className={classes.column}>
 								<Typography component="h4" variant="h4">
 									Capa
 								</Typography>
 							</div>
 							<div className={classes.column}>
 								{uploaded && <img src={uploaded} />}
-								{!uploaded && issue && issue.image && <img src={issue.image} />}
-								{!uploaded && !issue && <h4>Sem imagem de capa</h4>}
+								{!uploaded && project && project.image && <img src={project.image} />}
+								{!uploaded && !project && <h4>Sem imagem de capa</h4>}
 							</div>
 							<div className={classNames(classes.column, classes.helper)}>
 								<Typography variant="caption">
@@ -158,7 +158,7 @@ class IssueForm extends Component {
 										)}
 									</Field>
 								</Typography>
-							</div>
+							</div> */}
 							{Object.keys(validInputList)
 								.filter((k) => {
 									if (validInputList[k].type !== 'file') {
@@ -173,7 +173,7 @@ class IssueForm extends Component {
 										<Field
 											name={input}
 											component={OutlineTextField}
-											type={validInputList[input].type}
+											inputType={validInputList[input].type}
 											label={validInputList[input].label}
 											required={validInputList[input].required || false}
 											onEditorStateChange={
@@ -192,8 +192,8 @@ class IssueForm extends Component {
 							<Button
 								size="small"
 								color="default"
-								onClick={() => publish({ variables: { issueId: issue.id } })}
-								disabled={!issue || !issue.publishedCall || issue.published}
+								onClick={() => publish({ variables: { projectId: project.id } })}
+								disabled={!project || !project.publishedCall || project.published}
 							>
 								Publicar projeto
 							</Button>

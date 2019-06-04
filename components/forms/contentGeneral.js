@@ -156,7 +156,7 @@ class JournalGeneralForm extends Component {
 										<Field
 											name="title"
 											component={OutlineTextField}
-											type="text"
+											inputType="text"
 											label="Título"
 											fullWidth
 										/>
@@ -165,7 +165,7 @@ class JournalGeneralForm extends Component {
 										<Field
 											name="subTitle"
 											component={OutlineTextField}
-											type="text"
+											inputType="text"
 											label="Frase"
 											fullWidth
 										/>

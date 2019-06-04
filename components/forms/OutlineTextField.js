@@ -1,26 +1,26 @@
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import { withStyles } from '@material-ui/core/styles'
-import MenuItem from '@material-ui/core/MenuItem'
-import TextField from '@material-ui/core/TextField'
-import Editor from './Editor'
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { withStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+import Editor from './Editor';
 
-const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
-  dense: {
-    marginTop: 16,
-  },
-  menu: {
-    width: 200,
-  },
-})
+const styles = (theme) => ({
+	container: {
+		display: 'flex',
+		flexWrap: 'wrap'
+	},
+	textField: {
+		marginLeft: theme.spacing(1),
+		marginRight: theme.spacing(1)
+	},
+	dense: {
+		marginTop: 16
+	},
+	menu: {
+		width: 200
+	}
+});
 //  <TextField
 //   id="outlined-uncontrolled"
 //   label="Uncontrolled"
@@ -229,43 +229,40 @@ const styles = theme => ({
 // />
 
 const OutlineTextField = ({
-  classes,
-  input: { name, onChange, value, ...restInput },
-  meta,
-  label,
-  type,
-  inputProps,
-  onEditorStateChange,
-  ...rest
+	classes,
+	input: { name, onChange, value, ...restInput },
+	meta,
+	label,
+	inputType,
+	inputProps,
+	onEditorStateChange,
+	...rest
 }) => {
-  if (type === 'html') {
-    return <Editor onEditorStateChange={onEditorStateChange} value={value} />
-  }
-  return (
-    <TextField
-      {...rest}
-      type={type}
-      name={name}
-      helperText={meta.touched ? meta.error : undefined}
-      error={meta.error && meta.touched}
-      inputProps={restInput}
-      onChange={onChange}
-      value={value}
-      id="outlined-name"
-      label={label}
-      className={classes.textField}
-      margin="normal"
-      variant="outlined"
-      inputProps={{ min: 1 }} 
-    />
-  )
-  
-}
+	if (inputType === 'html') {
+		return <Editor onEditorStateChange={onEditorStateChange} value={value} />;
+	}
+	return (
+		<TextField
+			{...rest}
+			type={inputType}
+			name={name}
+			helperText={meta.touched ? meta.error : undefined}
+			error={meta.error && meta.touched}
+			inputProps={restInput}
+			onChange={onChange}
+			value={value}
+			id="outlined-name"
+			label={label}
+			className={classes.textField}
+			margin="normal"
+			variant="outlined"
+			inputProps={{ min: 1 }}
+		/>
+	);
+};
 
 OutlineTextField.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
+	classes: PropTypes.object.isRequired
+};
 
-export default withStyles(styles)(OutlineTextField)
-
-
+export default withStyles(styles)(OutlineTextField);

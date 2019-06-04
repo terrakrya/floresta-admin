@@ -67,7 +67,7 @@ const styles = (theme) => ({
 	}
 });
 
-class JournalAboutForm extends Component {
+class AboutForm extends Component {
 	onEditorStateChange = (editor, change, blur) => {
 		blur('description');
 		change('description', editor);
@@ -112,7 +112,7 @@ class JournalAboutForm extends Component {
 									<Field
 										name="description"
 										component={OutlineTextField}
-										type="html"
+										inputType="html"
 										label="Descrição"
 										onEditorStateChange={(e) => this.onEditorStateChange(e, change, blur)}
 									/>
@@ -121,7 +121,7 @@ class JournalAboutForm extends Component {
                   <Field
                     name="title"
                     component={OutlineTextField}
-                    type="text"
+                    inputType="text"
                     label="Título"
                   />
                 </div>
@@ -129,7 +129,7 @@ class JournalAboutForm extends Component {
                   <Field
                     name="contact"
                     component={OutlineTextField}
-                    type="text"
+                    inputType="text"
                     label="Contato"
                   />
                 </div> */}
@@ -155,8 +155,8 @@ class JournalAboutForm extends Component {
 	}
 }
 
-JournalAboutForm.propTypes = {
+AboutForm.propTypes = {
 	classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(JournalAboutForm);
+export default withStyles(styles)(AboutForm);
