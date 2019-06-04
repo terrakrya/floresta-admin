@@ -76,8 +76,8 @@ const styles = (theme) => ({
 	},
 	root: {
 		...theme.mixins.gutters(),
-		paddingTop: theme.spacing.unit * 2,
-		paddingBottom: theme.spacing.unit * 2
+		paddingTop: theme.spacing(1) * 2,
+		paddingBottom: theme.spacing(1) * 2
 	},
 	column: {
 		flexBasis: '33.33%'
