@@ -10,6 +10,8 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Upload from './Upload';
 import OutlineTextField from './OutlineTextField';
+import Select from './Select';
+import MultiSelect from '../MultiSelect';
 
 const validInputList = {
 	name: {
@@ -75,12 +77,30 @@ const styles = (theme) => ({
 		flexFlow: 'row wrap'
 	},
 	root: {
+		display: 'flex',
+		flexFlow: 'column',
+		alignItems: 'center',
 		...theme.mixins.gutters(),
 		paddingTop: theme.spacing(1) * 2,
 		paddingBottom: theme.spacing(1) * 2
 	},
+	full: {
+		flexBasis: '100%'
+	},
 	column: {
-		flexBasis: '33.33%'
+		display: 'flex',
+		flexFlow: 'row nowrap',
+		alignItems: 'center',
+		justifyContent: 'space-around',
+		flexBasis: '33.33%',
+		width: '100%'
+	},
+	selectors: {
+		height: 400,
+		display: 'flex',
+		flexFlow: 'column',
+		alignItems: 'center',
+		justifyContent: 'space-around'
 	}
 });
 
@@ -159,6 +179,10 @@ class IssueForm extends Component {
 									</Field>
 								</Typography>
 							</div> */}
+							<Typography component="h1" variant="h3" style={{ padding: '35px 0' }}>
+								Novo projeto
+							</Typography>
+							<Divider />
 							{Object.keys(validInputList)
 								.filter((k) => {
 									if (validInputList[k].type !== 'file') {
@@ -166,7 +190,7 @@ class IssueForm extends Component {
 									}
 								})
 								.map((input) => (
-									<div className={classes.column} key={input}>
+									<div className={classes.full} key={input}>
 										{validInputList[input].type === 'html' && (
 											<h3>{validInputList[input].label}</h3>
 										)}
@@ -184,6 +208,26 @@ class IssueForm extends Component {
 										/>
 									</div>
 								))}
+							<div className={classes.selectors}>
+								<Typography component="h5" variant="h5">
+									Categoria
+								</Typography>
+								<div className={classes.column}>
+									<Select label={'Selecione a categoria deste projeto'} />
+									<Button size="small" color="primary">
+										Nova categoria
+									</Button>
+								</div>
+								<Typography component="h5" variant="h5">
+									Etiquetas
+								</Typography>
+								<div className={classes.column}>
+									<MultiSelect label={'Selectione as etiquetas deste projeto'} />
+									<Button size="small" color="primary">
+										Nova etiqueta
+									</Button>
+								</div>
+							</div>
 							<Divider />
 							<Button size="small">Cancel</Button>
 							<Button size="small" color="primary" type="submit" disabled={pristine || invalid}>
