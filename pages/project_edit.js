@@ -3,12 +3,11 @@ import Router from 'next/router';
 import { Query, Mutation } from 'react-apollo';
 import { withRouter } from 'next/router';
 
-import SAVE_PRODUCT from '../queries/saveProject.gql';
-// import UPDATE_ISSUE from '../queries/issueUpdate.gql'
-// import ISSUE from '../queries/issue.gql'
-// import ALL_ISSUES_LOCAL from '../queries/allIssuesLocal.gql'
-// import ISSUE_PUBLISH_CALL from '../queries/issuePublishCall.gql'
-// import ISSUE_PUBLISH from '../queries/issuePublish.gql'
+import SAVE_PROJECT from '../queries/saveProject.gql';
+import CATEGORIES from '../queries/categories.gql'
+import TAGS from '../queries/tags.gql'
+
+// import PROJECT from '../queries/project.gql'
 
 import ProjectForm from '../components/forms/project';
 import App from '../components/App';
@@ -18,59 +17,65 @@ const ProjectEdit = ({ router: { query: { key } } }) => {
 	return (
 		<App>
 			{!key && (
-				<Mutation mutation={SAVE_PRODUCT}>
+				<Mutation mutation={SAVE_PROJECT}>
 					{(saveProject, { error: errorSaveProject, client: clientSaveProject }) => {
 						return (
-							<ProjectForm
-								onSubmit={async (values) => {
-									const res = await saveProject({ variables: { input: values } });
-									console.log('CREATE RES', res);
-									if (errorSaveProject) console.log('ERROR do something...', errorSaveProject);
-									// const { allIssues } = clientSaveProject.cache.readQuery({ query: ALL_ISSUES_LOCAL})
-									// clientSaveProject.writeData({ data: {
-									//   allIssues: Object.assign(allIssues, res.data.saveProject)
-									// }})
-									Router.push('/projects');
-								}}
-							/>
+              <Query query={TAGS}>
+                {({ loading: loadingTags, error: errorTags, data: dataTags }) => (
+                  <Query query={CATEGORIES}>
+                  {({ loading: loadingCategories, error: errorCategories, data: dataCategories }) => {
+                    const categories = loadingCategories ? null : dataCategories.projectCategories
+                    const tags = loadingCategories ? null : dataTags.projectTags
+                    return (
+                      <ProjectForm
+                        categories={categories}
+                        tags={tags}
+                        onSubmit={async (values) => {
+                          const res = await saveProject({ variables: { input: values } });
+                          console.log('CREATE RES', res);
+                          if (errorSaveProject) console.log('ERROR do something...', errorSaveProject);
+                          // const { allprojects } = clientSaveProject.cache.readQuery({ query: ALL_ISSUES_LOCAL})
+                          // clientSaveProject.writeData({ data: {
+                          //   allprojects: Object.assign(allprojects, res.data.saveProject)
+                          // }})
+                          Router.push('/projects');
+                        }}
+                      />
+                    )
+                  }}
+                </Query>
+                )}
+              </Query>
 						);
 					}}
 				</Mutation>
 			)}
 			{/* {key && 
-        <Query query={ISSUE} variables={{ issueKey: key }}>
-          {({ loading: loadingIssue, error: errorIssue, data: dataIssue }) => {
-            if (loadingIssue) return <Loading />
+        <Query query={PROJECT} variables={{ issueKey: key }}>
+          {({ loading: loadingproject, error: errorproject, data: dataproject }) => {
+            if (loadingproject) return <Loading />
             return (
-              <Mutation mutation={UPDATE_ISSUE}>
-                {(updateIssue, { error: errorupdateIssue, client: clientUpdate }) => {
+              <Mutation mutation={SAVE_PROJECT}>
+                {(updateproject, { error: errorupdateproject, client: clientUpdate }) => {
                   return (
-                    <Mutation mutation={ISSUE_PUBLISH_CALL}>
-                      {(publishIssueCall, { error: errorPublishCall, client: clientPublishCall }) => (
-                        <Mutation mutation={ISSUE_PUBLISH}>
-                          {(publishIssue, { error: errorPublish, client: clientPublish }) => (
-                            <ProjectForm
-                              onSubmit={async (values) => {
-                                // console.log('VALUES', values)
-                                const res = await updateIssue({ variables: { input: values, issueId: dataIssue.issue.id } })
-                                // console.log(res)
-                                if (errorupdateIssue) console.log('ERROR do something...')
-                                // const localData = clientUpdate.cache.readQuery({ query: ALL_ISSUES_LOCAL})
-                                // console.log('Local', localData)
-                                // clientUpdate.writeData({ data: {
-                                //   issue: res.data.updateIssue
-                                // }})
-                                Router.push('/issues')
-                              }}
-                              issue={dataIssue.issue}
-                              publishCall={publishIssueCall}
-                              publish={publishIssue}
-                            />
-                          )}
-                        </Mutation>
-                      )}
-                    </Mutation>
-                  )
+                    <ProjectForm
+                      onSubmit={async (values) => {
+                        // console.log('VALUES', values)
+                        const res = await updateproject({ variables: { input: values, issueId: dataproject.project.id } })
+                        // console.log(res)
+                        if (errorupdateproject) console.log('ERROR do something...')
+                        // const localData = clientUpdate.cache.readQuery({ query: ALL_ISSUES_LOCAL})
+                        // console.log('Local', localData)
+                        // clientUpdate.writeData({ data: {
+                        //   project: res.data.updateproject
+                        // }})
+                        Router.push('/issues')
+                      }}
+                      project={dataproject.project}
+                      publishCall={publishprojectCall}
+                      publish={publishproject}
+                    />
+                  )}
                 }}
               </Mutation>
             )

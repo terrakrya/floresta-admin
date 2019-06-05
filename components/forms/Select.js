@@ -2,23 +2,24 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Avatar from '@material-ui/core/Avatar';
+import AddIcon from '@material-ui/icons/Add';
 
-export default ({ label }) => {
-	const [ values, setValues ] = React.useState([ {} ]);
+export default ({ label, create, createAction, selected, setSelected, items }) => {
 	function handleChange(event) {
-		setValues(event.target.value);
+		if (event.target.value === 'create') {
+			createAction()
+		} else {
+			setSelected(event.target.value);
+		}
 	}
 
 	return (
 		<div>
 			<InputLabel htmlFor="outlined-age-simple">{label}</InputLabel>
-			<Select value={10} onChange={handleChange} input={<OutlinedInput name="age" id="outlined-age-simple" />}>
-				<MenuItem value="">
-					<em>None</em>
-				</MenuItem>
-				<MenuItem value={10}>Coletivo Audio-visual</MenuItem>
-				<MenuItem value={20}>Linhas de ação</MenuItem>
-				<MenuItem value={30}>Associação Floresta Protegida</MenuItem>
+			<Select value={selected || items[0].slug} onChange={handleChange} input={<OutlinedInput name={`select`} id={`select`} />}>
+				{items.map((item, index) => <MenuItem key={item.slug} value={item.slug} selected={index === 0}>{item.name}</MenuItem>)}
+				{create && <MenuItem value={'create'}><Avatar><AddIcon /></Avatar>{create}</MenuItem>}
 			</Select>
 		</div>
 	);

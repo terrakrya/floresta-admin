@@ -5,7 +5,7 @@ const ReactQuill = dynamic(() => import('react-quill'), {
 
 export default ({ onEditorStateChange, value }) => {
 	if (window) {
-		return <ReactQuill value={value} onChange={(e) => onEditorStateChange(e)} />;
+		return <ReactQuill onChange={(e) => onEditorStateChange(e)} defaultValue={value} />;
 	} else {
 		return <input type="textarea" />;
 	}

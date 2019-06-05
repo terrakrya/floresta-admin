@@ -1,0 +1,10 @@
+query($slug: String) {
+  projectCategories(slug: $slug) {
+    id
+    name
+    slug
+    description
+    media
+    photos
+  }
+}

@@ -1,0 +1,10 @@
+mutation($input: ProjectCategoryInput!) {
+  saveProjectCategory(input: $input) {
+    id
+    name
+    slug
+    description
+    media
+    photos
+  }
+}

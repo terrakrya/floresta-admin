@@ -9,6 +9,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import GoBackIcon from '@material-ui/icons/KeyboardArrowLeft';
 import { checkToken } from '../lib/auth';
 import Drawer from '../components/Drawer';
 import USER from '../queries/user.gql';
@@ -57,7 +58,7 @@ class App extends Component {
 	};
 
 	render() {
-		const { classes } = this.props;
+		const { classes, goBack } = this.props;
 		return (
 			<Query query={USER}>
 				{({ loading: loadingUser, error: errorUser, data: dataUser }) => {
@@ -79,6 +80,19 @@ class App extends Component {
 										>
 											<MenuIcon />
 										</IconButton>
+										{goBack ? (
+											<div>
+												<IconButton
+													color="inherit"
+													aria-label="Go back"
+													onClick={() => Router.push(goBack)}
+												>
+													<GoBackIcon />
+												</IconButton>
+											</div>
+										) : (
+											<div />
+										)}
 										<Typography variant="h6" color="inherit" noWrap>
 											Floresta Protegida
 										</Typography>

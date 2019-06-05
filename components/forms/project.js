@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Router from 'next/router';
 import { Form, Field } from 'react-final-form';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -12,6 +13,8 @@ import Upload from './Upload';
 import OutlineTextField from './OutlineTextField';
 import Select from './Select';
 import MultiSelect from '../MultiSelect';
+import TagEditDialog from '../TagEditDialog';
+import CategoryEditDialog from '../CategoryEditDialog';
 
 const validate = (values) => {
 	const errors = {};
@@ -63,21 +66,46 @@ const styles = (theme) => ({
 		flexFlow: 'column',
 		alignItems: 'center',
 		justifyContent: 'space-around'
+	},
+	footer: {
+		display: 'flex',
+		flexFlow: 'row nowrap',
+		alignItems: 'center',
+		justifyContent: 'space-around',
+		paddingTop: 50
 	}
 });
 
-const ProjectForm = ({ classes, onSubmit, project, publish }) => {
+const ProjectForm = ({ classes, onSubmit, project, publish, categories, tags }) => {
+	// Upload
 	const [ uploadedList, setUpload ] = React.useState([]);
-
+	const [ dialogOpen, setDialog ] = React.useState({
+		tag: false,
+		category: false
+	});
 	const clearUpload = () => setUpload([]);
-
 	const handleUpload = (uploaded, change, blur) => {
 		console.log('uploaded', uploaded);
 		blur('image');
 		change('image', uploaded);
 		setUpload(uploadedList.concat(uploaded));
 	};
+	// Dialogs
+	function handleClickOpen(dialog) {
+		setDialog({ ...dialogOpen, [dialog]: true });
+	}
 
+	const handleDialogClose = (dialog, value) => {
+		setDialog({ ...dialogOpen, [dialog]: false });
+		// Reload tags
+		// setSelectedValue(value);
+	};
+	// Category
+	const [ selectedCategory, setSelectedCategory ] = React.useState(null);
+	const handleSelectCategory = e => {
+		setSelectedCategory(e)
+	}
+	// Editor
 	const onEditorStateChange = (editor, change, blur) => {
 		blur('body');
 		change('body', editor);
@@ -104,40 +132,33 @@ const ProjectForm = ({ classes, onSubmit, project, publish }) => {
 								Nome do projeto
 							</Typography>
 							<Field name={'name'} component={OutlineTextField} inputType={'text'} />
-							<Typography component="h5" variant="h5">
-								Descrição do projeto
-							</Typography>
-							<Field
-								name={'description'}
-								component={OutlineTextField}
-								inputType={'html'}
-								onEditorStateChange={(e) => onEditorStateChange(e, change, blur)}
-							/>
 						</div>
 						<div className={classes.selectors}>
 							<Typography component="h5" variant="h5">
 								Categoria
 							</Typography>
-							<div className={classes.column}>
-								<Select label={'Selecione a categoria deste projeto'} />
-								<Button size="small" color="primary">
-									Nova categoria
-								</Button>
-								<Button size="small" color="primary">
+							{categories && <div className={classes.column}>
+								<Select
+									label={'Selecione a categoria deste projeto'}
+									items={categories}
+									create={'Criar nova categoria'}
+									createAction={() => Router.push(`/category_edit`)}
+									setSelected={handleSelectCategory}
+									selected={selectedCategory}
+								/>
+								{(categories !== 'loading' && categories.length > 0) && <Button size="small" color="primary" onClick={() => Router.push(`/category_edit?slug=${selectedCategory || categories[0].slug}`)}>
 									Atualizar categoria
-								</Button>
-							</div>
+								</Button>}
+							</div>}
 							<Typography component="h5" variant="h5">
 								Etiquetas
 							</Typography>
 							<div className={classes.column}>
 								<MultiSelect label={'Selectione as etiquetas deste projeto'} />
-								<Button size="small" color="primary">
-									Nova etiqueta
-								</Button>
-								<Button size="small" color="primary">
+								<Button size="small" color="primary" onClick={() => handleClickOpen('tag')}>
 									Atualizar etiquetas
 								</Button>
+								<TagEditDialog open={dialogOpen.tag} onClose={(v) => handleDialogClose('tag', v)} />
 							</div>
 						</div>
 						<div className={classes.column}>
@@ -174,18 +195,30 @@ const ProjectForm = ({ classes, onSubmit, project, publish }) => {
 							</Typography>
 						</div>
 						<Divider />
-						<Button size="small">Cancel</Button>
-						<Button size="small" color="primary" type="submit" disabled={pristine || invalid}>
-							Salvar
-						</Button>
-						<Button
-							size="small"
-							color="default"
-							onClick={() => publish({ variables: { projectId: project.id } })}
-							disabled={!project || !project.publishedCall || project.published}
-						>
-							Publicar projeto
-						</Button>
+						<Typography component="h5" variant="h5">
+							Descrição do projeto
+						</Typography>
+						<Field
+							name={'description'}
+							component={OutlineTextField}
+							inputType={'html'}
+							onEditorStateChange={(e) => onEditorStateChange(e, change, blur)}
+						/>
+						<Divider />
+						<div className={classes.footer}>
+							<Button size="small">Cancelar</Button>
+							<Button size="small" color="primary" type="submit" disabled={pristine || invalid}>
+								Salvar
+							</Button>
+							<Button
+								size="small"
+								color="default"
+								onClick={() => publish({ variables: { projectId: project.id } })}
+								disabled={!project || !project.publishedCall || project.published}
+							>
+								Publicar projeto
+							</Button>
+						</div>
 					</Paper>
 					<style jsx>{`
 						img {
