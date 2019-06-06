@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Router from 'next/router';
 import { Form, Field } from 'react-final-form';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -9,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Upload from './Upload';
 import OutlineTextField from './OutlineTextField';
+import CATEGORIES from '../../queries/categories.gql';
 
 const validate = (values) => {
 	const errors = {};
@@ -46,8 +48,8 @@ const styles = (theme) => ({
 	}
 });
 
-const CategoryForm = ({ classes, onSubmit, project, update, data }) => {
-	const initialMedia = (data && data.media) ? data.media : null
+const CategoryForm = ({ classes, onSubmit, project, update, data, remove, client }) => {
+	const initialMedia = data && data.media ? data.media : null;
 	const [ uploadedImage, setUpload ] = React.useState(initialMedia);
 	const clearUpload = () => setUpload([]);
 
@@ -66,13 +68,20 @@ const CategoryForm = ({ classes, onSubmit, project, update, data }) => {
 			<Form
 				initialValues={data ? data : {}}
 				onSubmit={async (e) => {
-					const cleanVars = {}
-					Object.keys(e).map(i => {
-						if (i !== '__typename') Object.assign(cleanVars, {[i]: e[i]})
-					})
-					console.log('cleanVars', cleanVars)
-					const res = await update({ variables: { input: cleanVars }})
-					console.log('RES', res)
+					const cleanVars = {};
+					Object.keys(e).map((i) => {
+						if (i !== '__typename') Object.assign(cleanVars, { [i]: e[i] });
+					});
+					console.log('cleanVars', cleanVars);
+					const res = await update({ variables: { input: cleanVars } });
+					console.log('RES', res);
+					if (res && res.data) {
+						const categories = client.readQuery({ query: CATEGORIES });
+						const newList = categories.projectCategories.concat(res.data.saveProjectCategory);
+						console.log('newList', newList);
+						client.writeData({ data: { projectCategories: newList } });
+						Router.push('/project_edit');
+					}
 					// let cleanList = {};
 					// await onSubmit(cleanList);
 					// clearUpload();
@@ -99,9 +108,7 @@ const CategoryForm = ({ classes, onSubmit, project, update, data }) => {
 							</Typography>
 						</div>
 						<div className={classes.column}>
-							{uploadedImage && <img
-								src={uploadedImage}
-							/>}
+							{uploadedImage && <img src={uploadedImage} />}
 							{/* {!uploaded && project && project.image && <img src={project.image} />} */}
 							{!uploadedImage && <h4>Esta categoria não tem imagem de capa</h4>}
 						</div>
@@ -129,7 +136,29 @@ const CategoryForm = ({ classes, onSubmit, project, update, data }) => {
 						>
 							Salvar categoria
 						</Button>
-						<Button size="small">Cancelar</Button>
+						<Button size="small" onClick={() => Router.push(`/project_edit`)}>
+							Cancelar
+						</Button>
+						{data && (
+							<Button
+								size="small"
+								onClick={async () => {
+									alert('Tem certeza que deseja remover essa categoria?');
+									const res = await remove({ variables: { id: data.id } });
+									console.log('RES', res);
+									const categories = client.readQuery({ query: CATEGORIES });
+									console.log('categories', categories);
+									const newList = categories.projectCategories.filter(
+										(i) => i.id !== res.data.removeProjectCategory
+									);
+									console.log('newList', newList);
+									client.writeData({ data: { projectCategories: newList } });
+									Router.push('/project_edit');
+								}}
+							>
+								Remover
+							</Button>
+						)}
 					</form>
 				)}
 			/>
