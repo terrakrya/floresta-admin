@@ -12,9 +12,8 @@ import Divider from '@material-ui/core/Divider';
 import Upload from './Upload';
 import OutlineTextField from './OutlineTextField';
 import Select from './Select';
-import MultiSelect from '../MultiSelect';
+import MultiSelect from './MultiSelect';
 import TagEditDialog from '../TagEditDialog';
-import CategoryEditDialog from '../CategoryEditDialog';
 
 const validate = (values) => {
 	const errors = {};
@@ -80,8 +79,7 @@ const ProjectForm = ({ classes, onSubmit, project, publish, categories, tags }) 
 	// Upload
 	const [ uploadedList, setUpload ] = React.useState([]);
 	const [ dialogOpen, setDialog ] = React.useState({
-		tag: false,
-		category: false
+		tag: false
 	});
 	const clearUpload = () => setUpload([]);
 	const handleUpload = (uploaded, change, blur) => {
@@ -97,14 +95,25 @@ const ProjectForm = ({ classes, onSubmit, project, publish, categories, tags }) 
 
 	const handleDialogClose = (dialog, value) => {
 		setDialog({ ...dialogOpen, [dialog]: false });
-		// Reload tags
-		// setSelectedValue(value);
 	};
 	// Category
 	const [ selectedCategory, setSelectedCategory ] = React.useState(null);
-	const handleSelectCategory = e => {
-		setSelectedCategory(e)
-	}
+	const handleSelectCategory = (e) => {
+		setSelectedCategory(e);
+	};
+	// Tag
+	const [ selectedTags, setSelectedTags ] = React.useState([]);
+	const handleSelectTag = (event) => {
+		// const { options } = event.target;
+		// const value = [];
+		// for (let i = 0, l = options.length; i < l; i += 1) {
+		// 	if (options[i].selected) {
+		// 		value.push(options[i].value);
+		// 	}
+		// }
+		// console.log('Setting', value);
+		setSelectedTags(event.target.value);
+	};
 	// Editor
 	const onEditorStateChange = (editor, change, blur) => {
 		blur('body');
@@ -137,28 +146,51 @@ const ProjectForm = ({ classes, onSubmit, project, publish, categories, tags }) 
 							<Typography component="h5" variant="h5">
 								Categoria
 							</Typography>
-							{categories && <div className={classes.column}>
-								<Select
-									label={'Selecione a categoria deste projeto'}
-									items={categories}
-									create={'Criar nova categoria'}
-									createAction={() => Router.push(`/category_edit`)}
-									setSelected={handleSelectCategory}
-									selected={selectedCategory}
-								/>
-								{(categories !== 'loading' && categories.length > 0) && <Button size="small" color="primary" onClick={() => Router.push(`/category_edit?slug=${selectedCategory || categories[0].slug}`)}>
-									Atualizar categoria
-								</Button>}
-							</div>}
+							{categories && (
+								<div className={classes.column}>
+									<Select
+										label={'Selecione a categoria deste projeto'}
+										items={categories}
+										create={'Criar nova categoria'}
+										createAction={() => Router.push(`/category_edit`)}
+										setSelected={handleSelectCategory}
+										selected={selectedCategory}
+									/>
+									{categories !== 'loading' &&
+									categories.length > 0 && (
+										<Button
+											size="small"
+											color="primary"
+											onClick={() =>
+												Router.push(
+													`/category_edit?slug=${selectedCategory || categories[0].slug}`
+												)}
+										>
+											Atualizar categoria
+										</Button>
+									)}
+								</div>
+							)}
 							<Typography component="h5" variant="h5">
 								Etiquetas
 							</Typography>
 							<div className={classes.column}>
-								<MultiSelect label={'Selectione as etiquetas deste projeto'} />
+								<MultiSelect
+									label={'Selectione as etiquetas deste projeto'}
+									items={tags}
+									create={'Criar nova etiqueta'}
+									createAction={() => Router.push(`/tag_edit`)}
+									setSelected={handleSelectTag}
+									selected={selectedTags}
+								/>
 								<Button size="small" color="primary" onClick={() => handleClickOpen('tag')}>
 									Atualizar etiquetas
 								</Button>
-								<TagEditDialog open={dialogOpen.tag} onClose={(v) => handleDialogClose('tag', v)} />
+								<TagEditDialog
+									tags={tags}
+									open={dialogOpen.tag}
+									onClose={(v) => handleDialogClose('tag', v)}
+								/>
 							</div>
 						</div>
 						<div className={classes.column}>

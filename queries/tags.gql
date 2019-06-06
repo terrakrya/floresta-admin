@@ -1,7 +1,10 @@
-query {
-  projectTags {
+query($slug: String) {
+  projectTags(slug: $slug) {
     id
     name
     slug
+    description
+    media
+    photos
   }
 }

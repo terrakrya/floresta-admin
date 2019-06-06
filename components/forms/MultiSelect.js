@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 
-const names = [ 'Castanha', 'Rio Marangua', 'Encontro nacional' ];
 const MenuProps = {
 	PaperProps: {
 		style: {
@@ -39,44 +38,35 @@ const MenuProps = {
 	}
 };
 
-export default ({ label }) => {
+export default ({ label, items, selected, setSelected, create, createAction }) => {
 	const classes = useStyles();
 	const theme = useTheme();
-	const [ personName, setPersonName ] = React.useState([]);
-	function handleChange(event) {
-		setPersonName(event.target.value);
-	}
-	function handleChangeMultiple(event) {
-		const { options } = event.target;
-		const value = [];
-		for (let i = 0, l = options.length; i < l; i += 1) {
-			if (options[i].selected) {
-				value.push(options[i].value);
-			}
-		}
-		setPersonName(value);
-	}
-
 	return (
 		<div>
 			<InputLabel htmlFor="select-multiple-chip">{label}</InputLabel>
 			<Select
 				multiple
-				value={names}
-				onChange={(e) => console.log(e)}
+				value={selected || []}
+				onChange={(e) => setSelected(e)}
 				input={<Input id="select-multiple-chip" />}
-				renderValue={(selected) => (
-					<div className={classes.chips}>
-						{selected.map((value) => <Chip key={value} label={value} className={classes.chip} />)}
-					</div>
-				)}
 				MenuProps={MenuProps}
+				renderValue={(selected) => {
+					if (selected && selected.length > 0) {
+						return (
+							<div className={classes.chips}>
+								{selected.map((value) => <Chip key={value} label={value} className={classes.chip} />)}
+							</div>
+						);
+					}
+				}}
 			>
-				{names.map((name) => (
-					<MenuItem key={name} value={name}>
-						{name}
-					</MenuItem>
-				))}
+				{items &&
+					items.length > 0 &&
+					items.map((i) => (
+						<MenuItem key={i.id} value={i.slug}>
+							{i.name}
+						</MenuItem>
+					))}
 			</Select>
 		</div>
 	);
