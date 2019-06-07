@@ -14,6 +14,7 @@ export default ({ open, onClose, tags }) => {
 			<DialogTitle id="criar-nova-etiqueta">Selecione etiqueta para atualizar</DialogTitle>
 			<List>
 				{tags &&
+					typeof tags !== 'string' &&
 					tags.map((tag) => (
 						<ListItem key={tag.id} button onClick={() => Router.push(`/tag_edit?slug=${tag.slug}`)}>
 							<ListItemText primary={tag.name} />

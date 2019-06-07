@@ -7,15 +7,10 @@ import REMOVE_CATEGORY from '../queries/removeCategory.gql';
 import CATEGORIES from '../queries/categories.gql';
 
 const Page = ({ client, data, update, remove }) => (
-	<App goBack={'/project_edit'}>
-		<Form
-			data={data}
-			update={update}
-			remove={remove}
-			client={client}
-		/>
-	</App>	
-)
+	<App>
+		<Form data={data} update={update} remove={remove} client={client} />
+	</App>
+);
 
 const CategoryEdit = ({ router: { query } }) => {
 	if (Object.entries(query).length !== 0 || query.constructor !== Object) {
@@ -34,16 +29,15 @@ const CategoryEdit = ({ router: { query } }) => {
 												data={data.projectCategories[0]}
 												client={clientUpdate}
 											/>
-										)
-									}
-									else return <h1>Loading...</h1>
+										);
+									} else return <h1>Loading...</h1>;
 								}}
 							</Query>
 						)}
 					</Mutation>
 				)}
 			</Mutation>
-		)
+		);
 	} else {
 		return (
 			<Mutation mutation={SAVE_CATEGORY}>
@@ -53,6 +47,6 @@ const CategoryEdit = ({ router: { query } }) => {
 			</Mutation>
 		);
 	}
-}
+};
 
-export default withRouter(CategoryEdit)
+export default withRouter(CategoryEdit);

@@ -44,30 +44,34 @@ export default ({ label, items, selected, setSelected, create, createAction }) =
 	return (
 		<div>
 			<InputLabel htmlFor="select-multiple-chip">{label}</InputLabel>
-			<Select
-				multiple
-				value={selected || []}
-				onChange={(e) => setSelected(e)}
-				input={<Input id="select-multiple-chip" />}
-				MenuProps={MenuProps}
-				renderValue={(selected) => {
-					if (selected && selected.length > 0) {
-						return (
-							<div className={classes.chips}>
-								{selected.map((value) => <Chip key={value} label={value} className={classes.chip} />)}
-							</div>
-						);
-					}
-				}}
-			>
-				{items &&
-					items.length > 0 &&
-					items.map((i) => (
-						<MenuItem key={i.id} value={i.slug}>
-							{i.name}
-						</MenuItem>
-					))}
-			</Select>
+			{typeof items !== 'string' && (
+				<Select
+					multiple
+					value={selected || []}
+					onChange={(e) => setSelected(e)}
+					input={<Input id="select-multiple-chip" />}
+					MenuProps={MenuProps}
+					renderValue={(selected) => {
+						if (selected && selected.length > 0) {
+							return (
+								<div className={classes.chips}>
+									{selected.map((value) => (
+										<Chip key={value} label={value} className={classes.chip} />
+									))}
+								</div>
+							);
+						}
+					}}
+				>
+					{items &&
+						items.length > 0 &&
+						items.map((i) => (
+							<MenuItem key={i.id} value={i.name}>
+								{i.name}
+							</MenuItem>
+						))}
+				</Select>
+			)}
 		</div>
 	);
 };

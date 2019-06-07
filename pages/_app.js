@@ -12,6 +12,7 @@ import 'react-quill/dist/quill.snow.css'; // QUILL
 import SEO from '../next-seo.config';
 import withApolloClient from '../lib/with-apollo-client';
 import theme from '../lib/theme';
+import StateContext from '../lib/StateContext';
 
 Router.events.on('routeChangeStart', (url) => {
 	console.log(`Loading: ${url}`);
@@ -21,6 +22,9 @@ Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
 class Admin extends App {
+	state = {
+		previousPagePath: null
+	};
 	componentDidMount() {
 		// Remove the server-side injected CSS.
 		const jssStyles = document.querySelector('#jss-server-side');
@@ -28,6 +32,10 @@ class Admin extends App {
 			jssStyles.parentNode.removeChild(jssStyles);
 		}
 	}
+
+	setPreviousPagePath = (path) => {
+		this.setState({ previousPagePath: path });
+	};
 
 	render() {
 		const { Component, pageProps, apolloClient } = this.props;
@@ -38,7 +46,14 @@ class Admin extends App {
 					<ThemeProvider theme={theme}>
 						{/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
 						<CssBaseline />
-						<Component {...pageProps} />
+						<StateContext.Provider
+							value={{
+								setPreviousPagePath: this.setPreviousPagePath,
+								previousPagePath: this.state.previousPagePath
+							}}
+						>
+							<Component {...pageProps} />
+						</StateContext.Provider>
 					</ThemeProvider>
 				</ApolloProvider>
 			</Container>

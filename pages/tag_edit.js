@@ -7,7 +7,7 @@ import REMOVE_TAG from '../queries/removeTag.gql';
 import TAGS from '../queries/tags.gql';
 
 const Page = ({ client, data, update, remove }) => (
-	<App goBack={'/project_edit'}>
+	<App>
 		<Form data={data} update={update} remove={remove} client={client} />
 	</App>
 );
