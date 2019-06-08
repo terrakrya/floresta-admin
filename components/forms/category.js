@@ -51,6 +51,7 @@ const styles = (theme) => ({
 
 const CategoryForm = ({ classes, onSubmit, project, update, data, remove, client }) => {
 	const { previousPagePath } = React.useContext(StateContext);
+	const goBackUrl = previousPagePath || '/project_edit';
 	const initialMedia = data && data.media ? data.media : null;
 	const [ uploadedImage, setUpload ] = React.useState(initialMedia);
 	const clearUpload = () => setUpload([]);
@@ -82,7 +83,7 @@ const CategoryForm = ({ classes, onSubmit, project, update, data, remove, client
 						const newList = categories.projectCategories.concat(res.data.saveProjectCategory);
 						console.log('newList', newList);
 						client.writeData({ data: { projectCategories: newList } });
-						Router.push('/project_edit');
+						Router.push(goBackUrl);
 					}
 					// let cleanList = {};
 					// await onSubmit(cleanList);
@@ -138,7 +139,7 @@ const CategoryForm = ({ classes, onSubmit, project, update, data, remove, client
 						>
 							Salvar categoria
 						</Button>
-						<Button size="small" onClick={() => Router.push(previousPagePath)}>
+						<Button size="small" onClick={() => Router.push(goBackUrl)}>
 							Cancelar
 						</Button>
 						{data && (
@@ -155,7 +156,7 @@ const CategoryForm = ({ classes, onSubmit, project, update, data, remove, client
 									);
 									console.log('newList', newList);
 									client.writeData({ data: { projectCategories: newList } });
-									Router.push('/project_edit');
+									Router.push(goBackUrl);
 								}}
 							>
 								Remover

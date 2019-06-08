@@ -72,7 +72,7 @@ const App = (props) => {
 		() => {
 			router.events.on('beforeHistoryChange', (url) => {
 				if (!checkIfMainPage(url)) {
-					setPreviousPagePath(router.pathname);
+					setPreviousPagePath(router.asPath);
 				}
 			});
 			return () => {

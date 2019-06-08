@@ -11,6 +11,7 @@ import Divider from '@material-ui/core/Divider';
 import Upload from './Upload';
 import OutlineTextField from './OutlineTextField';
 import TAGS from '../../queries/tags.gql';
+import StateContext from '../../lib/StateContext';
 
 const validate = (values) => {
 	const errors = {};
@@ -49,6 +50,9 @@ const styles = (theme) => ({
 });
 
 const TagForm = ({ classes, onSubmit, project, update, data, remove, client }) => {
+	const { previousPagePath } = React.useContext(StateContext);
+	const goBackUrl = previousPagePath || '/project_edit';
+
 	const initialMedia = data && data.media ? data.media : null;
 	const [ uploadedImage, setUpload ] = React.useState(initialMedia);
 	const clearUpload = () => setUpload([]);
@@ -79,7 +83,7 @@ const TagForm = ({ classes, onSubmit, project, update, data, remove, client }) =
 						// const newList = tags.projectTags.concat(res.data.saveProjectTag);
 						// console.log('newList', newList);
 						// client.writeData({ data: { projectTags: newList } });
-						Router.push('/project_edit');
+						Router.push(goBackUrl);
 					}
 					// let cleanList = {};
 					// await onSubmit(cleanList);
@@ -135,7 +139,7 @@ const TagForm = ({ classes, onSubmit, project, update, data, remove, client }) =
 						>
 							Salvar etiqueta
 						</Button>
-						<Button size="small" onClick={() => Router.push(`/project_edit`)}>
+						<Button size="small" onClick={() => Router.push(goBackUrl)}>
 							Cancelar
 						</Button>
 						{data && (
@@ -150,7 +154,7 @@ const TagForm = ({ classes, onSubmit, project, update, data, remove, client }) =
 									// const newList = tags.projectTags.filter((i) => i.id !== res.data.removeProjectTag);
 									// console.log('newList', newList);
 									// client.writeData({ data: { projectTags: newList } });
-									Router.push('/project_edit');
+									Router.push(goBackUrl);
 								}}
 							>
 								Remover
