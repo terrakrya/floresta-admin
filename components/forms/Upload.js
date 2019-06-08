@@ -14,17 +14,17 @@ const styles = (theme) => ({
 	}
 });
 
-const Upload = ({ required, multiple, accept, classes, handleUpload, meta }) => (
+const Upload = ({ required, multiple, name, accept, classes, handleUpload, meta }) => (
 	<div>
 		<Mutation mutation={UPLOAD_FILE}>
 			{(upload) => (
 				<input
 					accept={accept || '*'}
-					multiple={multiple}
+					multiple={multiple || false}
 					required={required}
 					type="file"
 					className={classes.input}
-					id="contained-button-file"
+					id={name ? name : 'contained-button-file'}
 					onChange={({ target: { validity, files } }) => {
 						validity.valid;
 						let urlList = [];
@@ -45,7 +45,7 @@ const Upload = ({ required, multiple, accept, classes, handleUpload, meta }) => 
 				/>
 			)}
 		</Mutation>
-		<label htmlFor="contained-button-file">
+		<label htmlFor={name ? name : 'contained-button-file'}>
 			<Button variant="contained" component="span" className={classes.button}>
 				Upload
 			</Button>

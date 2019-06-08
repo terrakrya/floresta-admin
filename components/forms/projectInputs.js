@@ -55,7 +55,7 @@ export default ({
 					handleEditor(data.description);
 				}
 			} else {
-				if (typeof categories !== 'string' && !formState.category) {
+				if (typeof categories !== 'string' && categories[0] && !formState.category) {
 					handleSelectCategory(categories[0].name);
 				}
 			}
@@ -86,7 +86,7 @@ export default ({
 				</div>
 				<div className={classes.column}>
 					{formState.media !== initialState.media && (
-						<img src={formState.media} style={{ maxWidth: `${100 / formState.photos.length}%` }} />
+						<img src={formState.media} style={{ maxWidth: '100%' }} />
 					)}
 					{formState.media === initialState.media && <h4>Este projeto não tem imagens</h4>}
 				</div>
@@ -94,7 +94,11 @@ export default ({
 					<Typography variant="caption">
 						capa do projeto
 						<br />
-						<Upload accept="image/*" handleUpload={(url) => handleMediaUpload(url[0])} />
+						<Upload
+							accept="image/*"
+							name="upload-media"
+							handleUpload={(url) => handleMediaUpload(url[0])}
+						/>
 					</Typography>
 				</div>
 				<Divider />
@@ -181,9 +185,12 @@ export default ({
 						Fotos do projeto
 						<br />
 						<Upload
+							name="upload-photos"
 							multiple={true}
 							accept="image/*"
-							handleUpload={(urls) => handlePhotosUpload(formState.photos.concat(urls))}
+							handleUpload={(urls) => {
+								handlePhotosUpload(formState.photos ? formState.photos.concat(urls) : urls);
+							}}
 						/>
 					</Typography>
 				</div>

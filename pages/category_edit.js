@@ -5,6 +5,7 @@ import Form from '../components/forms/category';
 import SAVE_CATEGORY from '../queries/saveCategory.gql';
 import REMOVE_CATEGORY from '../queries/removeCategory.gql';
 import CATEGORIES from '../queries/categories.gql';
+import Loading from '../components/Loading';
 
 const Page = ({ client, data, update, remove }) => (
 	<App>
@@ -30,7 +31,7 @@ const CategoryEdit = ({ router: { query } }) => {
 												client={clientUpdate}
 											/>
 										);
-									} else return <h1>Loading...</h1>;
+									} else return <Loading />;
 								}}
 							</Query>
 						)}

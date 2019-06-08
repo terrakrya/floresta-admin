@@ -5,6 +5,7 @@ import Form from '../components/forms/tag';
 import SAVE_TAG from '../queries/saveTag.gql';
 import REMOVE_TAG from '../queries/removeTag.gql';
 import TAGS from '../queries/tags.gql';
+import Loading from '../components/Loading';
 
 const Page = ({ client, data, update, remove }) => (
 	<App>
@@ -31,7 +32,7 @@ const TagEdit = ({ router: { query } }) => {
 												client={clientUpdate}
 											/>
 										);
-									} else return <h1>Loading...</h1>;
+									} else return <Loading />;
 								}}
 							</Query>
 						)}

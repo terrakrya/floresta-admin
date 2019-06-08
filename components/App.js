@@ -14,6 +14,7 @@ import { checkToken } from '../lib/auth';
 import Drawer from '../components/Drawer';
 import USER from '../queries/user.gql';
 import StateContext from '../lib/StateContext';
+import Loading from '../components/Loading';
 
 const drawerWidth = 240;
 
@@ -89,7 +90,7 @@ const App = (props) => {
 	return (
 		<Query query={USER}>
 			{({ loading: loadingUser, error: errorUser, data: dataUser }) => {
-				if (loadingUser) return <h1>Loading</h1>;
+				if (loadingUser) return <Loading />;
 				if (dataUser && dataUser.user) {
 					if (dataUser.user.role === 'CUSTOMER') {
 						return <h1>Não autorizado</h1>;

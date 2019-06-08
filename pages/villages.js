@@ -20,7 +20,7 @@ const Villages = ({ classes }) => (
 	<App>
 		<Query query={VILLAGES}>
 			{({ loading: loadingVillages, error: errorVillages, data: dataVillages }) => {
-				if (loadingVillages) return <h1>Loading</h1>;
+				if (loadingVillages) return <Loading />;
 				if (errorVillages) {
 					console.log(errorVillages);
 					return <h1>Error</h1>;
