@@ -20,12 +20,12 @@ export default ({ label, create, createAction, selected, setSelected, items }) =
 			<InputLabel htmlFor="outlined-age-simple">{label}</InputLabel>
 			{typeof items !== 'string' && (
 				<Select
-					value={selected || (items[0] ? items[0].slug : '')}
+					value={selected || (items[0] ? items[0].name : '')}
 					onChange={handleChange}
 					input={<OutlinedInput name={`select`} id={`select`} />}
 				>
 					{items.map((item, index) => (
-						<MenuItem key={item.slug} value={item.slug} selected={index === 0}>
+						<MenuItem key={item.name} value={item.name} selected={index === 0}>
 							{item.name}
 						</MenuItem>
 					))}

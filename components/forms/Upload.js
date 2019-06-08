@@ -49,8 +49,8 @@ const Upload = ({ required, multiple, accept, classes, handleUpload, meta }) => 
 			<Button variant="contained" component="span" className={classes.button}>
 				Upload
 			</Button>
-			<span>{meta.touched ? meta.error : undefined}</span>
-			<span>{meta.error && meta.touched}</span>
+			{/* <span>{meta.touched ? meta.error : undefined}</span>
+			<span>{meta.error && meta.touched}</span> */}
 		</label>
 	</div>
 );

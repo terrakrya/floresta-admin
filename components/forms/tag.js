@@ -74,11 +74,11 @@ const TagForm = ({ classes, onSubmit, project, update, data, remove, client }) =
 					});
 					const res = await update({ variables: { input: cleanVars } });
 					if (res && res.data) {
-						const tags = client.readQuery({ query: TAGS });
-						console.log('NEW DATA', res.data.saveProjectTag);
-						const newList = tags.projectTags.concat(res.data.saveProjectTag);
-						console.log('newList', newList);
-						client.writeData({ data: { projectTags: newList } });
+						// const tags = client.readQuery({ query: TAGS });
+						// console.log('NEW DATA', res.data.saveProjectTag);
+						// const newList = tags.projectTags.concat(res.data.saveProjectTag);
+						// console.log('newList', newList);
+						// client.writeData({ data: { projectTags: newList } });
 						Router.push('/project_edit');
 					}
 					// let cleanList = {};
@@ -99,7 +99,7 @@ const TagForm = ({ classes, onSubmit, project, update, data, remove, client }) =
 							name={'description'}
 							component={OutlineTextField}
 							inputType={'html'}
-							onEditorStateChange={(e) => onEditorStateChange(e, change, blur)}
+							handleEditor={(e) => onEditorStateChange(e, change, blur)}
 						/>
 						<div className={classes.column}>
 							<Typography component="h4" variant="h4">
@@ -145,11 +145,11 @@ const TagForm = ({ classes, onSubmit, project, update, data, remove, client }) =
 									alert('Tem certeza que deseja remover essa etiqueta?');
 									const res = await remove({ variables: { id: data.id } });
 									console.log('RES', res);
-									const tags = client.readQuery({ query: TAGS });
-									console.log('tags', tags);
-									const newList = tags.projectTags.filter((i) => i.id !== res.data.removeProjectTag);
-									console.log('newList', newList);
-									client.writeData({ data: { projectTags: newList } });
+									// const tags = client.readQuery({ query: TAGS });
+									// console.log('tags', tags);
+									// const newList = tags.projectTags.filter((i) => i.id !== res.data.removeProjectTag);
+									// console.log('newList', newList);
+									// client.writeData({ data: { projectTags: newList } });
 									Router.push('/project_edit');
 								}}
 							>

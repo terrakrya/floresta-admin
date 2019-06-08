@@ -11,6 +11,7 @@ import Divider from '@material-ui/core/Divider';
 import Upload from './Upload';
 import OutlineTextField from './OutlineTextField';
 import CATEGORIES from '../../queries/categories.gql';
+import StateContext from '../../lib/StateContext';
 
 const validate = (values) => {
 	const errors = {};
@@ -49,10 +50,11 @@ const styles = (theme) => ({
 });
 
 const CategoryForm = ({ classes, onSubmit, project, update, data, remove, client }) => {
+	const { previousPagePath } = React.useContext(StateContext);
 	const initialMedia = data && data.media ? data.media : null;
 	const [ uploadedImage, setUpload ] = React.useState(initialMedia);
 	const clearUpload = () => setUpload([]);
-
+	console.log('previousPagePath', previousPagePath);
 	const handleUpload = (uploaded, change, blur) => {
 		blur('media');
 		change('media', uploaded[0]);
@@ -100,7 +102,7 @@ const CategoryForm = ({ classes, onSubmit, project, update, data, remove, client
 							name={'description'}
 							component={OutlineTextField}
 							inputType={'html'}
-							onEditorStateChange={(e) => onEditorStateChange(e, change, blur)}
+							handleEditor={(e) => onEditorStateChange(e, change, blur)}
 						/>
 						<div className={classes.column}>
 							<Typography component="h4" variant="h4">
@@ -136,7 +138,7 @@ const CategoryForm = ({ classes, onSubmit, project, update, data, remove, client
 						>
 							Salvar categoria
 						</Button>
-						<Button size="small" onClick={() => Router.push(`/project_edit`)}>
+						<Button size="small" onClick={() => Router.push(previousPagePath)}>
 							Cancelar
 						</Button>
 						{data && (

@@ -228,29 +228,20 @@ const styles = (theme) => ({
 //   variant="outlined"
 // />
 
-const OutlineTextField = ({
-	classes,
-	input: { name, onChange, value, ...restInput },
-	meta,
-	label,
-	inputType,
-	inputProps,
-	onEditorStateChange,
-	...rest
-}) => {
+const OutlineTextField = ({ classes, input, meta, label, inputType, inputProps, handleEditor, ...rest }) => {
 	if (inputType === 'html') {
-		return <Editor onEditorStateChange={onEditorStateChange} value={value} />;
+		return <Editor onEditorStateChange={handleEditor} value={input.value} />;
 	}
 	return (
 		<TextField
 			{...rest}
 			type={inputType}
-			name={name}
-			helperText={meta.touched ? meta.error : undefined}
-			error={meta.error && meta.touched}
-			inputProps={restInput}
-			onChange={onChange}
-			value={value}
+			name={input.name}
+			// helperText={meta.touched ? meta.error : undefined}
+			// error={meta.error && meta.touched}
+			// inputProps={input.restInput}
+			onChange={input.onChange}
+			value={input.value}
 			id="outlined-name"
 			label={label}
 			className={classes.textField}
