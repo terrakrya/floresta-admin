@@ -8,6 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/DashboardOutlined';
 import AdminIcon from '@material-ui/icons/PeopleOutlineOutlined';
 import ProjectIcon from '@material-ui/icons/AssignmentOutlined';
+import VillageIcon from '@material-ui/icons/WallpaperOutlined';
 import AnalyticsIcon from '@material-ui/icons/PollOutlined';
 import ContentIcon from '@material-ui/icons/PersonalVideoOutlined';
 import LogoutIcon from '@material-ui/icons/ExitToAppOutlined';
@@ -40,6 +41,14 @@ const DrawerList = ({ classes, email, name, router: { pathname } }) => (
 								<ProjectIcon />
 							</ListItemIcon>
 							<ListItemText primary={'Projetos'} />
+						</ListItem>
+					</Link>
+					<Link prefetch href="/villages">
+						<ListItem button disabled={pathname === '/villages'}>
+							<ListItemIcon>
+								<VillageIcon />
+							</ListItemIcon>
+							<ListItemText primary={'Vilas'} />
 						</ListItem>
 					</Link>
 					<Link prefetch href="/admins">

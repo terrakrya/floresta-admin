@@ -1,0 +1,10 @@
+query($slug: String $id: String) {
+ village(slug: $slug id: $id) {
+   id
+   name
+   slug
+   photos
+   media
+   description
+ }  
+}

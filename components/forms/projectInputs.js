@@ -27,7 +27,8 @@ export default ({
 	handleSelectTag,
 	dialogOpen,
 	handleDialogClose,
-	handleUpload,
+	handlePhotosUpload,
+	handleMediaUpload,
 	handleEditor,
 	handleClickOpen,
 	formState
@@ -38,14 +39,17 @@ export default ({
 				if (formState.name === initialState.name && data.name) {
 					handleInput('name', data.name);
 				}
+				if (formState.media === initialState.media && data.media) {
+					handleMediaUpload(data.media);
+				}
 				if (formState.category === initialState.category && data.category) {
 					handleSelectCategory(data.category.name);
 				}
-				if (formState.tags.length === 0 && data.tags) {
+				if (!formState.tags && data.tags) {
 					handleSelectTag(data.tags.map((i) => i.name));
 				}
-				if (formState.photos.length === 0 && data.photos.length > 0) {
-					handleUpload(formState.photos.concat(data.photos));
+				if (!formState.photos && data.photos.length > 0) {
+					handlePhotosUpload(data.photos);
 				}
 				if (formState.description === initialState.description && data.description) {
 					handleEditor(data.description);
@@ -58,7 +62,6 @@ export default ({
 		},
 		[ data, formState ]
 	);
-	// console.log('FORM', formState);
 	const nameInput = {
 		name: 'name',
 		onChange: (e) => handleInput('name', e.target.value),
@@ -75,6 +78,25 @@ export default ({
 				<Typography component="h1" variant="h3" style={{ padding: '35px 0' }}>
 					Novo projeto
 				</Typography>
+				<Divider />
+				<div className={classes.column}>
+					<Typography component="h4" variant="h4">
+						Capa
+					</Typography>
+				</div>
+				<div className={classes.column}>
+					{formState.media !== initialState.media && (
+						<img src={formState.media} style={{ maxWidth: `${100 / formState.photos.length}%` }} />
+					)}
+					{formState.media === initialState.media && <h4>Este projeto não tem imagens</h4>}
+				</div>
+				<div className={classNames(classes.column, classes.helper)}>
+					<Typography variant="caption">
+						capa do projeto
+						<br />
+						<Upload accept="image/*" handleUpload={(url) => handleMediaUpload(url[0])} />
+					</Typography>
+				</div>
 				<Divider />
 				<div className={classes.inputs}>
 					<Typography component="h5" variant="h5">
@@ -121,7 +143,7 @@ export default ({
 							create={'Criar nova etiqueta'}
 							createAction={() => Router.push(`/tag_edit`)}
 							setSelected={(e) => handleSelectTag(e.target.value)}
-							selected={formState.tags}
+							selected={formState.tags || []}
 						/>
 						{/* )}
 						</Field> */}
@@ -137,7 +159,7 @@ export default ({
 					</Typography>
 				</div>
 				<div className={classes.column}>
-					{formState.photos.length > 0 &&
+					{formState.photos &&
 						formState.photos.map((image) => (
 							<div key={image} className={'photo-list'}>
 								<img src={image} style={{ maxWidth: `${100 / formState.photos.length}%` }} />
@@ -145,14 +167,14 @@ export default ({
 									className="photo-list-button"
 									size="small"
 									onClick={async () => {
-										handleUpload(formState.photos.filter((i) => i !== image));
+										handlePhotosUpload(formState.photos.filter((i) => i !== image));
 									}}
 								>
 									Remover
 								</Button>
 							</div>
 						))}
-					{formState.photos.length === 0 && <h4>Este projeto não tem imagens</h4>}
+					{formState.photos && formState.photos.length === 0 && <h4>Este projeto não tem imagens</h4>}
 				</div>
 				<div className={classNames(classes.column, classes.helper)}>
 					<Typography variant="caption">
@@ -161,7 +183,7 @@ export default ({
 						<Upload
 							multiple={true}
 							accept="image/*"
-							handleUpload={(urls) => handleUpload(formState.photos.concat(urls))}
+							handleUpload={(urls) => handlePhotosUpload(formState.photos.concat(urls))}
 						/>
 					</Typography>
 				</div>

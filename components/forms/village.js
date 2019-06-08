@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Upload from './Upload';
 import OutlineTextField from './OutlineTextField';
-import CATEGORIES from '../../queries/categories.gql';
+import VILLAGES from '../../queries/villages.gql';
 import StateContext from '../../lib/StateContext';
 
 const validate = (values) => {
@@ -51,11 +51,9 @@ const styles = (theme) => ({
 
 const CategoryForm = ({ classes, update, data, remove, client }) => {
 	const { previousPagePath } = React.useContext(StateContext);
-	const goBackUrl = previousPagePath || '/project_edit';
+	const goBackUrl = previousPagePath || '/village_edit';
 	const initialMedia = data && data.media ? data.media : null;
 	const [ uploadedImage, setUpload ] = React.useState(initialMedia);
-	const clearUpload = () => setUpload([]);
-	console.log('previousPagePath', previousPagePath);
 	const handleUpload = (uploaded, change, blur) => {
 		blur('media');
 		change('media', uploaded[0]);
@@ -66,6 +64,7 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
 		blur('description');
 		change('description', editor);
 	};
+	console.log('DATA', data);
 	return (
 		<Paper className={classes.root} elevation={1}>
 			<Form
@@ -79,10 +78,10 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
 					const res = await update({ variables: { input: cleanVars } });
 					console.log('RES', res);
 					if (res && res.data) {
-						const categories = client.readQuery({ query: CATEGORIES });
-						const newList = categories.projectCategories.concat(res.data.saveProjectCategory);
-						console.log('newList', newList);
-						client.writeData({ data: { projectCategories: newList } });
+						// const villages = client.readQuery({ query: VILLAGES });
+						// const newList = villages.projectCategories.concat(res.data.saveProjectCategory);
+						// console.log('newList', newList);
+						// client.writeData({ data: { projectCategories: newList } });
 						Router.push(goBackUrl);
 					}
 					// let cleanList = {};
@@ -93,11 +92,11 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
 				render={({ handleSubmit, pristine, invalid, form: { change, blur } }) => (
 					<form onSubmit={handleSubmit}>
 						<Typography component="h5" variant="h5">
-							Nome da categoria
+							Nome da aldeia
 						</Typography>
 						<Field name={'name'} component={OutlineTextField} inputType={'text'} />
 						<Typography component="h5" variant="h5">
-							Descrição da categoria
+							Descrição da aldeia
 						</Typography>
 						<Field
 							name={'description'}
@@ -112,8 +111,7 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
 						</div>
 						<div className={classes.column}>
 							{uploadedImage && <img src={uploadedImage} />}
-							{/* {!uploaded && project && project.image && <img src={project.image} />} */}
-							{!uploadedImage && <h4>Esta categoria não tem imagem de capa</h4>}
+							{!uploadedImage && <h4>Esta aldeia não tem imagem de capa</h4>}
 						</div>
 						<div className={classNames(classes.column, classes.helper)}>
 							<Typography variant="caption">
@@ -137,7 +135,7 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
 							type="submit"
 							// disabled={}
 						>
-							Salvar categoria
+							Salvar aldeia
 						</Button>
 						<Button size="small" onClick={() => Router.push(goBackUrl)}>
 							Cancelar
@@ -146,16 +144,16 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
 							<Button
 								size="small"
 								onClick={async () => {
-									alert('Tem certeza que deseja remover essa categoria?');
+									alert('Tem certeza que deseja remover essa aldeia?');
 									const res = await remove({ variables: { id: data.id } });
 									console.log('RES', res);
-									const categories = client.readQuery({ query: CATEGORIES });
-									console.log('categories', categories);
-									const newList = categories.projectCategories.filter(
-										(i) => i.id !== res.data.removeProjectCategory
-									);
-									console.log('newList', newList);
-									client.writeData({ data: { projectCategories: newList } });
+									// const villages = client.readQuery({ query: VILLAGES });
+									// console.log('villages', villages);
+									// const newList = villages.projectCategories.filter(
+									// 	(i) => i.id !== res.data.removeProjectCategory
+									// );
+									// console.log('newList', newList);
+									// client.writeData({ data: { projectCategories: newList } });
 									Router.push(goBackUrl);
 								}}
 							>

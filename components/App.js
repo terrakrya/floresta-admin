@@ -49,7 +49,7 @@ const styles = (theme) => ({
 	}
 });
 
-const mainPages = [ '/', '/projects', '/admins', '/portal' ];
+const mainPages = [ '/', '/projects', '/admins', '/portal', '/villages' ];
 const checkIfMainPage = (page) => {
 	let res = false;
 	mainPages.map((p) => {

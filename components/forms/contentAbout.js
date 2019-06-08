@@ -114,7 +114,7 @@ class AboutForm extends Component {
 										component={OutlineTextField}
 										inputType="html"
 										label="Descrição"
-										onEditorStateChange={(e) => this.onEditorStateChange(e, change, blur)}
+										handleEditor={(e) => this.onEditorStateChange(e, change, blur)}
 									/>
 								</div>
 								{/* <div className={classNames(classes.column, classes.helper)}>

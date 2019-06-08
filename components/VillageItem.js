@@ -23,7 +23,7 @@ const styles = {
 	}
 };
 
-const ProjectItem = ({ classes, id, slug, name, description, media, category, photos, tags }) => {
+const VillageItem = ({ classes, id, slug, name, description, media, photos }) => {
 	return (
 		<Card className={classes.card}>
 			<CardActionArea>
@@ -51,7 +51,7 @@ const ProjectItem = ({ classes, id, slug, name, description, media, category, ph
 				<Button
 					size="small"
 					color="primary"
-					onClick={() => Router.push(`/project_edit?${slug ? `slug=${slug}` : `id=${id}`}`)}
+					onClick={() => Router.push(`/village_edit?${slug ? `slug=${slug}` : `id=${id}`}`)}
 				>
 					Editar
 				</Button>
@@ -66,8 +66,8 @@ const ProjectItem = ({ classes, id, slug, name, description, media, category, ph
 	);
 };
 
-ProjectItem.propTypes = {
+VillageItem.propTypes = {
 	classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ProjectItem);
+export default withStyles(styles)(VillageItem);

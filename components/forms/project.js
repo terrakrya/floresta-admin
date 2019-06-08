@@ -55,22 +55,28 @@ const styles = (theme) => ({
 const ProjectForm = ({ classes, project, categories, tags, update, remove, client }) => {
 	// Form
 	const initialState = {
+		media: '',
 		category: '',
-		tags: [],
+		tags: null,
 		name: '',
 		description: '',
-		photos: []
+		photos: null
 	};
 	const [ formState, setFormState ] = React.useState(initialState);
 	const handleInput = (key, input) => {
 		setFormState({ ...formState, [key]: input });
 	};
-	// Upload
+
+	// Upload Media
+	const handleMediaUpload = (uploaded) => {
+		setFormState({ ...formState, media: uploaded });
+	};
+	// Upload Photos
 	const [ dialogOpen, setDialog ] = React.useState({
 		tag: false
 	});
 
-	const handleUpload = (uploaded) => {
+	const handlePhotosUpload = (uploaded) => {
 		setFormState({ ...formState, photos: uploaded });
 	};
 	// Dialogs
@@ -134,7 +140,8 @@ const ProjectForm = ({ classes, project, categories, tags, update, remove, clien
 			handleSelectTag={handleSelectTag}
 			dialogOpen={dialogOpen}
 			handleDialogClose={handleDialogClose}
-			handleUpload={handleUpload}
+			handlePhotosUpload={handlePhotosUpload}
+			handleMediaUpload={handleMediaUpload}
 			handleClickOpen={handleClickOpen}
 			handleEditor={handleEditor}
 		/>

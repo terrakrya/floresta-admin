@@ -1,0 +1,12 @@
+query {
+ villages {
+   id
+   createdAt
+   updatedAt
+   name
+   slug
+   photos
+   media
+   description
+ }  
+}
