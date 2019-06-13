@@ -1,5 +1,5 @@
 now.production.json
-
+.env
 # Logs
 logs
 *.log
