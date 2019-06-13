@@ -11,7 +11,9 @@ import ProjectIcon from '@material-ui/icons/AssignmentOutlined';
 import VillageIcon from '@material-ui/icons/WallpaperOutlined';
 import AnalyticsIcon from '@material-ui/icons/PollOutlined';
 import ContentIcon from '@material-ui/icons/PersonalVideoOutlined';
+import NewsIcon from '@material-ui/icons/PictureInPictureOutlined';
 import LogoutIcon from '@material-ui/icons/ExitToAppOutlined';
+
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 
@@ -48,15 +50,15 @@ const DrawerList = ({ classes, email, name, router: { pathname } }) => (
 							<ListItemIcon>
 								<VillageIcon />
 							</ListItemIcon>
-							<ListItemText primary={'Vilas'} />
+							<ListItemText primary={'Aldeias'} />
 						</ListItem>
 					</Link>
-					<Link prefetch href="/admins">
-						<ListItem button disabled={pathname === '/admins'}>
+					<Link prefetch href="/news">
+						<ListItem button disabled={pathname === '/news'}>
 							<ListItemIcon>
-								<AdminIcon />
+								<NewsIcon />
 							</ListItemIcon>
-							<ListItemText primary={'Administradores'} />
+							<ListItemText primary={'Notícias'} />
 						</ListItem>
 					</Link>
 					{/* <Link prefetch href='/analytics'>
@@ -72,6 +74,14 @@ const DrawerList = ({ classes, email, name, router: { pathname } }) => (
 								<ContentIcon />
 							</ListItemIcon>
 							<ListItemText primary={'Portal'} />
+						</ListItem>
+					</Link>
+					<Link prefetch href="/admins">
+						<ListItem button disabled={pathname === '/admins'}>
+							<ListItemIcon>
+								<AdminIcon />
+							</ListItemIcon>
+							<ListItemText primary={'Administradores'} />
 						</ListItem>
 					</Link>
 					<ListItem button>

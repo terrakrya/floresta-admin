@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "name": "journal-admin",
-  "builds": [
-    { "src": "next.config.js", "use": "@now/next", "config": { "maxLambdaSize": "50mb" } }
+  "name": "floresta-protegida-admin",
+  "builds": 
+    [{ "src": "package.json", "use": "@now/static-build" }
   ],
   "env": {
-    "API_HOST": "https://us1.prisma.sh/luandro-93a3b2/periodico/dev",
+    "API_HOST": "https://florestaprotegida-api.luandro.com",
     "NODE_ENV": "production"
   }
 }

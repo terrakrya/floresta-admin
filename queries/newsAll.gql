@@ -1,0 +1,12 @@
+query {
+ news {
+   id
+   createdAt
+   updatedAt
+   name
+   slug
+   photos
+   media
+   description
+ }  
+}

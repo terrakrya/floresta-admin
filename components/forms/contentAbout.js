@@ -100,7 +100,7 @@ class AboutForm extends Component {
 						<ExpansionPanel>
 							<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
 								<div className={classes.column}>
-									<Typography className={classes.heading}>Sobre</Typography>
+									<Typography className={classes.heading}>Quem somos</Typography>
 								</div>
 								<div className={classes.column}>
 									<Typography className={classes.secondaryHeading}>sobre a associação</Typography>

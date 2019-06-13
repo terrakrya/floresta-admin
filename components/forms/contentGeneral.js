@@ -114,7 +114,7 @@ class JournalGeneralForm extends Component {
 						<ExpansionPanel defaultExpanded>
 							<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
 								<div className={classes.column}>
-									<Typography className={classes.heading}>Geral</Typography>
+									<Typography className={classes.heading}>Home</Typography>
 								</div>
 								<div className={classes.column}>
 									<Typography className={classes.secondaryHeading}>configurações gerais</Typography>
