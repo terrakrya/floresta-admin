@@ -3,7 +3,7 @@ import { Query } from 'react-apollo';
 import { withStyles } from '@material-ui/core/styles';
 import Link from 'next/link';
 import NEWS_ALL from '../queries/newsAll.gql';
-import VillageItem from '../components/VillageItem';
+import NewsItem from '../components/NewsItem';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Loading from '../components/Loading';
@@ -28,8 +28,8 @@ const News = ({ classes }) => (
 				if (dataNews) {
 					return (
 						<div className="list">
-							{dataNews.news && dataNews.news.map((p) => <VillageItem key={p.id} {...p} />)}
-							<Link href="/village_edit">
+							{dataNews.newsAll && dataNews.newsAll.map((p) => <NewsItem key={p.id} {...p} />)}
+							<Link href="/news_edit">
 								<Fab color="primary" aria-label="Add" className={classes.fab}>
 									<AddIcon />
 								</Fab>

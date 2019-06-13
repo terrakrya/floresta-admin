@@ -3,10 +3,10 @@ import Router from 'next/router';
 import { Query, Mutation } from 'react-apollo';
 import { withRouter } from 'next/router';
 
-import SAVE_VILLAGE from '../queries/saveVillage.gql';
-import REMOVE_VILLAGE from '../queries/removeVillage.gql';
-import VILLAGE from '../queries/village.gql';
-import VillageForm from '../components/forms/village';
+import SAVE_NEWS from '../queries/saveNews.gql';
+import REMOVE_NEWS from '../queries/removeNews.gql';
+import NEWS from '../queries/news.gql';
+import NewsForm from '../components/forms/news';
 import App from '../components/App';
 import Loading from '../components/Loading';
 
@@ -15,27 +15,27 @@ const NewsEdit = ({ router: { query: { slug, id } } }) => {
 		<App>
 			{!slug &&
 			!id && (
-				<Mutation mutation={SAVE_VILLAGE}>
-					{(saveVillage, { error: errorSaveVillage, client: clientSaveVillage }) => {
-						return <VillageForm update={saveVillage} client={clientSaveVillage} />;
+				<Mutation mutation={SAVE_NEWS}>
+					{(saveNews, { error: errorSaveNews, client: clientSaveNews }) => {
+						return <NewsForm update={saveNews} client={clientSaveNews} />;
 					}}
 				</Mutation>
 			)}
 			{(slug || id) && (
-				<Query query={VILLAGE} variables={{ slug, id }}>
+				<Query query={NEWS} variables={{ id }}>
 					{({ loading, error, data }) => (
-						<Mutation mutation={SAVE_VILLAGE}>
-							{(saveVillage, { error: errorSaveVillage, client: clientSaveVillage }) => (
-								<Mutation mutation={REMOVE_VILLAGE}>
-									{(removeVillage, { error: errorRemoveVillage, client: clientRemoveVillage }) => {
+						<Mutation mutation={SAVE_NEWS}>
+							{(saveNews, { error: errorSaveNews, client: clientSaveNews }) => (
+								<Mutation mutation={REMOVE_NEWS}>
+									{(removeNews, { error: errorRemoveNews, client: clientRemoveNews }) => {
 										console.log(data, loading, error);
 										if (!loading && !error && data) {
 											return (
-												<VillageForm
-													update={saveVillage}
-													remove={removeVillage}
-													data={data.village}
-													client={clientSaveVillage}
+												<NewsForm
+													update={saveNews}
+													remove={removeNews}
+													data={data.news}
+													client={clientSaveNews}
 												/>
 											);
 										} else return <Loading />;

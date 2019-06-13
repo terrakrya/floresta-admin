@@ -1,10 +1,7 @@
-query($slug: String $id: String) {
- news(slug: $slug id: $id) {
+query($id: String) {
+ news(id: $id) {
    id
-   name
-   slug
-   photos
-   media
    description
+   link
  }  
 }

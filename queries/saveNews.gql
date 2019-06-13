@@ -1,0 +1,7 @@
+mutation($input: NewsInput!) {
+  saveNews(input: $input) {
+    id
+    description
+    link
+  }
+}

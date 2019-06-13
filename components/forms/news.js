@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Upload from './Upload';
 import OutlineTextField from './OutlineTextField';
-import VILLAGES from '../../queries/villages.gql';
 import StateContext from '../../lib/StateContext';
 
 const validate = (values) => {
@@ -49,17 +48,9 @@ const styles = (theme) => ({
 	}
 });
 
-const VillageForm = ({ classes, update, data, remove, client }) => {
+const NewsForm = ({ classes, update, data, remove, client }) => {
 	const { previousPagePath } = React.useContext(StateContext);
-	const goBackUrl = previousPagePath || '/village_edit';
-	const initialMedia = data && data.media ? data.media : null;
-	const [ uploadedImage, setUpload ] = React.useState(initialMedia);
-	const handleUpload = (uploaded, change, blur) => {
-		blur('media');
-		change('media', uploaded[0]);
-		setUpload(uploaded[0]);
-	};
-
+	const goBackUrl = previousPagePath || '/news_edit';
 	const onEditorStateChange = (editor, change, blur) => {
 		blur('description');
 		change('description', editor);
@@ -78,25 +69,18 @@ const VillageForm = ({ classes, update, data, remove, client }) => {
 					const res = await update({ variables: { input: cleanVars } });
 					console.log('RES', res);
 					if (res && res.data) {
-						// const villages = client.readQuery({ query: VILLAGES });
-						// const newList = villages.projectCategories.concat(res.data.saveProjectCategory);
-						// console.log('newList', newList);
-						// client.writeData({ data: { projectCategories: newList } });
 						Router.push(goBackUrl);
 					}
-					// let cleanList = {};
-					// await onSubmit(cleanList);
-					// clearUpload();
 				}}
 				validate={validate}
 				render={({ handleSubmit, pristine, invalid, form: { change, blur } }) => (
 					<form onSubmit={handleSubmit}>
 						<Typography component="h5" variant="h5">
-							Nome da aldeia
+							Link da notícia
 						</Typography>
-						<Field name={'name'} component={OutlineTextField} inputType={'text'} />
+						<Field name={'link'} component={OutlineTextField} inputType={'text'} />
 						<Typography component="h5" variant="h5">
-							Descrição da aldeia
+							Descrição da notícia
 						</Typography>
 						<Field
 							name={'description'}
@@ -104,30 +88,6 @@ const VillageForm = ({ classes, update, data, remove, client }) => {
 							inputType={'html'}
 							handleEditor={(e) => onEditorStateChange(e, change, blur)}
 						/>
-						<div className={classes.column}>
-							<Typography component="h4" variant="h4">
-								Imagem de capa
-							</Typography>
-						</div>
-						<div className={classes.column}>
-							{uploadedImage && <img src={uploadedImage} />}
-							{!uploadedImage && <h4>Esta aldeia não tem imagem de capa</h4>}
-						</div>
-						<div className={classNames(classes.column, classes.helper)}>
-							<Typography variant="caption">
-								Selecionar imagem de capa
-								<br />
-								<Field name="image">
-									{(fieldprops) => (
-										<Upload
-											{...fieldprops}
-											accept="image/*"
-											handleUpload={(url) => handleUpload(url, change, blur)}
-										/>
-									)}
-								</Field>
-							</Typography>
-						</div>
 						<Divider />
 						<Button
 							size="small"
@@ -135,7 +95,7 @@ const VillageForm = ({ classes, update, data, remove, client }) => {
 							type="submit"
 							// disabled={}
 						>
-							Salvar aldeia
+							Salvar notícia
 						</Button>
 						<Button size="small" onClick={() => Router.push(goBackUrl)}>
 							Cancelar
@@ -144,7 +104,7 @@ const VillageForm = ({ classes, update, data, remove, client }) => {
 							<Button
 								size="small"
 								onClick={async () => {
-									alert('Tem certeza que deseja remover essa aldeia?');
+									alert('Tem certeza que deseja remover essa notícia?');
 									const res = await remove({ variables: { id: data.id } });
 									console.log('RES', res);
 									// const villages = client.readQuery({ query: VILLAGES });
@@ -173,8 +133,8 @@ const VillageForm = ({ classes, update, data, remove, client }) => {
 	);
 };
 
-VillageForm.propTypes = {
+NewsForm.propTypes = {
 	classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(VillageForm);
+export default withStyles(styles)(NewsForm);
