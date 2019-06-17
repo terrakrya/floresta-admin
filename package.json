@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
+    "export": "next export",
     "now-build": "next build && next export -o dist",
     "build:analyze": "BUNDLE_ANALYZE=both npm run build",
     "start": "NODE_ENV=production API_HOST=https://florestaprotegida-api.luandro.com next start -p 3005"

@@ -1,5 +1,6 @@
 now.production.json
 dist/
+out/
 # Logs
 logs
 *.log
