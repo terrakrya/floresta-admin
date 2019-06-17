@@ -5,12 +5,7 @@ const withGraphql = require('next-plugin-graphql');
 const withCSS = require('@zeit/next-css');
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer');
 const withPreact = require('@zeit/next-preact');
-const dotEnvResult = require('dotenv').config();
 const stage = process.env.UP_STAGE;
-
-if (dotEnvResult.error) {
-	throw dotEnvResult.error;
-}
 
 const nextConfig = {
 	assetPrefix: stage ? `/${stage}` : '',
@@ -21,10 +16,7 @@ const nextConfig = {
 	publicRuntimeConfig: {
 		// Will be available on both server and client
 		staticFolder: '/static',
-		API_HOST: process.env.MY_SECRET // Pass through env variables
-	},
-	env: {
-		API_HOST: process.env.API_HOST ? process.env.API_HOST : 'http://localhost:4000'
+		mySecret: process.env.MY_SECRET // Pass through env variables
 	}
 };
 

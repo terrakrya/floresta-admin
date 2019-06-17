@@ -5,7 +5,12 @@
     [{ "src": "package.json", "use": "@now/static-build" }
   ],
   "env": {
-    "API_HOST": "https://florestaprotegida-api.luandro.com",
     "NODE_ENV": "production"
+  },
+  "build": {
+    "env": {
+      "API_HOST": "https://florestaprotegida-api.luandro.com",
+      "NODE_ENV": "production"
+    }
   }
 }
