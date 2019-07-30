@@ -8,6 +8,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import ReactSVG from 'react-svg';
+
 import Upload from './Upload';
 import OutlineTextField from './OutlineTextField';
 import CATEGORIES from '../../queries/categories.gql';
@@ -52,14 +54,26 @@ const styles = (theme) => ({
 const CategoryForm = ({ classes, update, data, remove, client }) => {
 	const { previousPagePath } = React.useContext(StateContext);
 	const goBackUrl = previousPagePath || '/project_edit';
-	const initialMedia = data && data.media ? data.media : null;
-	const [ uploadedImage, setUpload ] = React.useState(initialMedia);
-	const clearUpload = () => setUpload([]);
+	const initialImages = {
+		icon: data && data.icon ? data.icon : null,
+		media: data && data.media ? data.media : null
+	};
+	const [ uploadedImages, setUpload ] = React.useState(initialImages);
+	const clearUpload = () => setUpload({ icon: null, media: null });
 	console.log('previousPagePath', previousPagePath);
-	const handleUpload = (uploaded, change, blur) => {
-		blur('media');
-		change('media', uploaded[0]);
-		setUpload(uploaded[0]);
+	const handleUpload = (type, uploaded, change, blur) => {
+		console.log(
+			Object.assign(uploadedImages, {
+				[type]: uploaded[0]
+			})
+		);
+		blur(type);
+		change(type, uploaded[0]);
+		setUpload(
+			Object.assign(uploadedImages, {
+				[type]: uploaded[0]
+			})
+		);
 	};
 
 	const onEditorStateChange = (editor, change, blur) => {
@@ -79,11 +93,13 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
 					const res = await update({ variables: { input: cleanVars } });
 					console.log('RES', res);
 					if (res && res.data) {
-						const categories = client.readQuery({ query: CATEGORIES });
-						const newList = categories.projectCategories.concat(res.data.saveProjectCategory);
-						console.log('newList', newList);
-						client.writeData({ data: { projectCategories: newList } });
-						Router.push(goBackUrl);
+						console.log('CLIENT', client);
+						// const categories = await client.readQuery({ query: CATEGORIES });
+						// console.log('categories', categories);
+						// const newList = categories.projectCategories.concat(res.data.saveProjectCategory);
+						// console.log('newList', newList);
+						// client.writeData({ data: { projectCategories: newList } });
+						// Router.push(goBackUrl);
 					}
 					// let cleanList = {};
 					// await onSubmit(cleanList);
@@ -92,6 +108,7 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
 				validate={validate}
 				render={({ handleSubmit, pristine, invalid, form: { change, blur } }) => (
 					<form onSubmit={handleSubmit}>
+						{console.log('MEDIA', uploadedImages)}
 						<Typography component="h5" variant="h5">
 							Nome da categoria
 						</Typography>
@@ -107,24 +124,51 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
 						/>
 						<div className={classes.column}>
 							<Typography component="h4" variant="h4">
-								Imagem de capa
+								Imagens
 							</Typography>
 						</div>
 						<div className={classes.column}>
-							{uploadedImage && <img src={uploadedImage} />}
+							{uploadedImages.media && <img src={uploadedImages.media} />}
 							{/* {!uploaded && project && project.image && <img src={project.image} />} */}
-							{!uploadedImage && <h4>Esta categoria não tem imagem de capa</h4>}
+							{!uploadedImages.media && <h4>Esta categoria não tem imagem de capa</h4>}
 						</div>
 						<div className={classNames(classes.column, classes.helper)}>
 							<Typography variant="caption">
 								Selecionar imagem de capa
 								<br />
-								<Field name="image">
+								<Field name="media">
 									{(fieldprops) => (
 										<Upload
 											{...fieldprops}
 											accept="image/*"
-											handleUpload={(url) => handleUpload(url, change, blur)}
+											name="upload-media"
+											handleUpload={(url) => handleUpload('media', url, change, blur)}
+										/>
+									)}
+								</Field>
+							</Typography>
+						</div>
+						<Divider />
+						<div className={classes.column}>
+							{uploadedImages.icon && (
+								<span className="svg">
+									<ReactSVG src={uploadedImages.icon} />
+								</span>
+							)}
+							{/* {!uploaded && project && project.image && <img src={project.image} />} */}
+							{!uploadedImages.icon && <h4>Esta categoria não tem ícone</h4>}
+						</div>
+						<div className={classNames(classes.column, classes.helper)}>
+							<Typography variant="caption">
+								Selecionar ícone
+								<br />
+								<Field name="icon">
+									{(fieldprops) => (
+										<Upload
+											{...fieldprops}
+											accept="image/*"
+											name="upload-icon"
+											handleUpload={(url) => handleUpload('icon', url, change, blur)}
 										/>
 									)}
 								</Field>

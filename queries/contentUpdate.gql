@@ -4,6 +4,8 @@ mutation($input: ContentInput!) {
     banner
     title
     subTitle
+    facebookLink
+    youtubeLink
     description
     logo
     villageText

@@ -5,6 +5,7 @@ mutation($input: ProjectCategoryInput!) {
     slug
     description
     media
+    icon
     photos
   }
 }

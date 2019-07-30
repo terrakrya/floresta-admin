@@ -81,8 +81,8 @@ class JournalGeneralForm extends Component {
 
 	handleUpload = (uploaded, change, blur) => {
 		blur('logo');
-		change('logo', uploaded);
-		this.setState({ uploaded });
+		change('logo', uploaded[0]);
+		this.setState({ uploaded: uploaded[0] });
 	};
 
 	render() {
@@ -170,6 +170,24 @@ class JournalGeneralForm extends Component {
 											fullWidth
 										/>
 									</div>
+									<div className={classes.full}>
+										<Field
+											name="facebookLink"
+											component={OutlineTextField}
+											inputType="text"
+											label="url Facebook"
+											fullWidth
+										/>
+									</div>
+									<div className={classes.full}>
+										<Field
+											name="youtubeLink"
+											component={OutlineTextField}
+											inputType="text"
+											label="url Youtube"
+											fullWidth
+										/>
+									</div>
 								</div>
 							</ExpansionPanelDetails>
 							<Divider />
@@ -182,8 +200,8 @@ class JournalGeneralForm extends Component {
 						</ExpansionPanel>
 						<style jsx>{`
 							img {
-								max-width: 300px;
-								max-height: 300px;
+								max-width: 150px;
+								max-height: 150px;
 							}
 						`}</style>
 					</form>

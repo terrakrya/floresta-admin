@@ -23,14 +23,14 @@ const styles = {
 	}
 };
 
-const NewsItem = ({ classes, id, description, link }) => {
+const NewsItem = ({ classes, id, description, link, title, media }) => {
 	return (
 		<Card className={classes.card}>
-			<CardActionArea>
+			<CardActionArea style={{ backgroundImage: `url("${media}")`, backgroundSize: 'cover' }}>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="h2">
 						<a href={link} target="_blank">
-							{link}
+							{title}
 						</a>
 					</Typography>
 					<Typography component="p">

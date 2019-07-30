@@ -51,6 +51,12 @@ const styles = (theme) => ({
 const NewsForm = ({ classes, update, data, remove, client }) => {
 	const { previousPagePath } = React.useContext(StateContext);
 	const goBackUrl = previousPagePath || '/news_edit';
+	const [ uploadedImage, setUpload ] = React.useState(data && data.media ? data.media : null);
+	const handleUpload = (uploaded, change, blur) => {
+		blur('media');
+		change('media', uploaded[0]);
+		setUpload(uploaded[0]);
+	};
 	const onEditorStateChange = (editor, change, blur) => {
 		blur('description');
 		change('description', editor);
@@ -75,6 +81,32 @@ const NewsForm = ({ classes, update, data, remove, client }) => {
 				validate={validate}
 				render={({ handleSubmit, pristine, invalid, form: { change, blur } }) => (
 					<form onSubmit={handleSubmit}>
+						<Typography component="h5" variant="h5">
+							Título da notícia
+						</Typography>
+						<Field name={'title'} component={OutlineTextField} inputType={'text'} />
+						<div className={classes.column}>
+							{uploadedImage && <img src={uploadedImage} />}
+							{/* {!uploaded && project && project.image && <img src={project.image} />} */}
+							{!uploadedImage && <h4>Esta categoria não tem imagem de capa</h4>}
+						</div>
+						<div className={classNames(classes.column, classes.helper)}>
+							<Typography variant="caption">
+								Selecionar imagem de capa
+								<br />
+								<Field name="media">
+									{(fieldprops) => (
+										<Upload
+											{...fieldprops}
+											accept="image/*"
+											name="upload-media"
+											handleUpload={(url) => handleUpload(url, change, blur)}
+										/>
+									)}
+								</Field>
+							</Typography>
+						</div>
+						<Divider />
 						<Typography component="h5" variant="h5">
 							Link da notícia
 						</Typography>

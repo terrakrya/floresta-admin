@@ -3,5 +3,7 @@ mutation($input: NewsInput!) {
     id
     description
     link
+    title
+    media
   }
 }

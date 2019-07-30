@@ -4,6 +4,8 @@ query {
     banner
     title
     subTitle
+    facebookLink
+    youtubeLink
     description
     logo
     villageText
@@ -11,6 +13,8 @@ query {
     villages {
       name
     }
+    youtubeLink
+    facebookLink
     mapLink
   }
 }

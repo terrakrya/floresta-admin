@@ -3,5 +3,7 @@ query {
    id
    description
    link
+   title
+   media
  }  
 }

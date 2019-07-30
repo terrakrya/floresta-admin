@@ -611,6 +611,12 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
+"@babel/runtime@^7.5.5":
+  version "7.5.5"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.5.5.tgz#74fba56d35efbeca444091c7850ccd494fd2f132"
+  dependencies:
+    regenerator-runtime "^0.13.2"
+
 "@babel/template@^7.1.0", "@babel/template@^7.1.2", "@babel/template@^7.4.4":
   version "7.4.4"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.4.4.tgz#f4b88d1225689a08f5bc3a17483545be9e4ed237"
@@ -754,6 +760,12 @@
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
+
+"@tanem/svg-injector@^8.0.23":
+  version "8.0.23"
+  resolved "https://registry.yarnpkg.com/@tanem/svg-injector/-/svg-injector-8.0.23.tgz#07a840a36bd6a4a2b7b7ec3b398c1ac4521deffb"
+  dependencies:
+    "@babel/runtime" "^7.5.5"
 
 "@types/node@>=6":
   version "12.0.4"
@@ -5763,6 +5775,14 @@ react-ssr-prepass@1.0.2:
   resolved "https://registry.yarnpkg.com/react-ssr-prepass/-/react-ssr-prepass-1.0.2.tgz#f411414cbc043a90254cddcef0793b2aaf14b086"
   dependencies:
     object-is "^1.0.1"
+
+react-svg@^10.0.13:
+  version "10.0.13"
+  resolved "https://registry.yarnpkg.com/react-svg/-/react-svg-10.0.13.tgz#538aac6dc5ac66ccf0679d98fb01358d2eb2decd"
+  dependencies:
+    "@babel/runtime" "^7.5.5"
+    "@tanem/svg-injector" "^8.0.23"
+    prop-types "^15.7.2"
 
 react-transition-group@^2.5.0:
   version "2.9.0"

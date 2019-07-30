@@ -5,6 +5,7 @@ query($slug: String) {
     slug
     description
     media
+    icon
     photos
   }
 }

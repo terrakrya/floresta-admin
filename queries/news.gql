@@ -3,5 +3,7 @@ query($id: String) {
    id
    description
    link
+   title
+   media
  }  
 }

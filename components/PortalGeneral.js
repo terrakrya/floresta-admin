@@ -1,4 +1,5 @@
 import { Mutation } from 'react-apollo';
+import Router from 'next/router';
 import ContentGenaralForm from './forms/contentGeneral';
 import UPDATE_CONTENT from '../queries/contentUpdate.gql';
 
@@ -8,7 +9,7 @@ export default ({ content }) => (
 			<ContentGenaralForm
 				onSubmit={async (values) => {
 					const res = await update({ variables: { input: values } });
-					return clientUpdate.writeData({
+					await clientUpdate.writeData({
 						data: {
 							content: {
 								...res.data.updateContent

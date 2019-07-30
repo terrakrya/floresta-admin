@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+
 import Upload from './Upload';
 import OutlineTextField from './OutlineTextField';
 import Select from './Select';
@@ -252,6 +253,10 @@ export default ({
 				img {
 					max-width: 300px;
 					max-height: 300px;
+				}
+				.svg {
+					padding: 25px 0;
+					text-align: center;
 				}
 				.description {
 					padding: 45px 0;

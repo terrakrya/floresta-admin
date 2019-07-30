@@ -5,6 +5,7 @@ query($slug: String $id: String) {
      id
      name
      slug
+      icon
    }
    tags {
      id
