@@ -80,35 +80,6 @@ export default ({
 					Novo projeto
 				</Typography>
 				<Divider />
-				<div className={classes.column}>
-					<Typography component="h4" variant="h4">
-						Capa
-					</Typography>
-				</div>
-				<div className={classes.column}>
-					{formState.media !== initialState.media && (
-						<img src={formState.media} style={{ maxWidth: '100%' }} />
-					)}
-					{formState.media === initialState.media && <h4>Este projeto não tem imagens</h4>}
-				</div>
-				<div className={classNames(classes.column, classes.helper)}>
-					<Typography variant="caption">
-						capa do projeto
-						<br />
-						<Upload
-							accept="image/*"
-							name="upload-media"
-							handleUpload={(url) => handleMediaUpload(url[0])}
-						/>
-					</Typography>
-				</div>
-				<Divider />
-				<div className={classes.inputs}>
-					<Typography component="h5" variant="h5">
-						Nome do projeto
-					</Typography>
-					<OutlineTextField inputType={'text'} input={nameInput} />
-				</div>
 				<div className={classes.selectors}>
 					<Typography component="h5" variant="h5">
 						Categoria
@@ -157,6 +128,35 @@ export default ({
 						</Button>
 						<TagEditDialog tags={tags} open={dialogOpen.tag} onClose={(v) => handleDialogClose('tag', v)} />
 					</div>
+				</div>
+				<div className={classes.column}>
+					<Typography component="h4" variant="h4">
+						Capa
+					</Typography>
+				</div>
+				<div className={classes.column}>
+					{formState.media !== initialState.media && (
+						<img src={formState.media} style={{ maxWidth: '100%' }} />
+					)}
+					{formState.media === initialState.media && <h4>Este projeto não tem imagens</h4>}
+				</div>
+				<div className={classNames(classes.column, classes.helper)}>
+					<Typography variant="caption">
+						capa do projeto
+						<br />
+						<Upload
+							accept="image/*"
+							name="upload-media"
+							handleUpload={(url) => handleMediaUpload(url[0])}
+						/>
+					</Typography>
+				</div>
+				<Divider />
+				<div className={classes.inputs}>
+					<Typography component="h5" variant="h5">
+						Nome do projeto
+					</Typography>
+					<OutlineTextField inputType={'text'} input={nameInput} />
 				</div>
 				<div className={classes.column}>
 					<Typography component="h4" variant="h4">

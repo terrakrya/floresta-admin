@@ -56,7 +56,6 @@ const ProjectForm = ({ classes, project, categories, tags, update, remove, clien
 	// Form
 	const initialState = {
 		media: '',
-		icon: '',
 		category: '',
 		tags: null,
 		name: '',

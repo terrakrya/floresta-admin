@@ -12,6 +12,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Upload from './Upload';
+import AnyImage from '../AnyImage';
 import OutlineTextField from './OutlineTextField';
 
 const validate = (values) => {
@@ -129,7 +130,7 @@ class JournalGeneralForm extends Component {
 								</div>
 								<div className={classes.column} style={{ background: 'rgba(0,0,0,.5)' }}>
 									{((content && content.logo) || this.state.uploaded) && (
-										<img src={this.state.uploaded || content.logo} />
+										<AnyImage src={this.state.uploaded || content.logo} />
 									)}
 									{!this.state.uploaded && !(content && content.logo) && <h4>Sem logo...</h4>}
 								</div>
