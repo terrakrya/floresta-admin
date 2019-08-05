@@ -42,7 +42,7 @@ const ProjectItem = ({ classes, id, slug, name, description, media, category, ph
 						{name}
 					</Typography>
 					<Typography component="p">
-						<span dangerouslySetInnerHTML={{ __html: description }} />
+						<span dangerouslySetInnerHTML={{ __html: description ? description.substring(0, 500) + '...' : '' }} />
 					</Typography>
 					{photos && photos.map((p) => <img className="photos" key={p} src={p} />)}
 				</CardContent>
