@@ -8,8 +8,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
-import ReactSVG from 'react-svg';
 
+import AnyImage from '../AnyImage';
 import Upload from './Upload';
 import OutlineTextField from './OutlineTextField';
 import CATEGORIES from '../../queries/categories.gql';
@@ -60,13 +60,7 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
 	};
 	const [ uploadedImages, setUpload ] = React.useState(initialImages);
 	const clearUpload = () => setUpload({ icon: null, media: null });
-	console.log('previousPagePath', previousPagePath);
 	const handleUpload = (type, uploaded, change, blur) => {
-		console.log(
-			Object.assign(uploadedImages, {
-				[type]: uploaded[0]
-			})
-		);
 		blur(type);
 		change(type, uploaded[0]);
 		setUpload(
@@ -89,17 +83,13 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
 					Object.keys(e).map((i) => {
 						if (i !== '__typename') Object.assign(cleanVars, { [i]: e[i] });
 					});
-					console.log('cleanVars', cleanVars);
 					const res = await update({ variables: { input: cleanVars } });
 					console.log('RES', res);
 					if (res && res.data) {
-						console.log('CLIENT', client);
-						// const categories = await client.readQuery({ query: CATEGORIES });
-						// console.log('categories', categories);
-						// const newList = categories.projectCategories.concat(res.data.saveProjectCategory);
-						// console.log('newList', newList);
-						// client.writeData({ data: { projectCategories: newList } });
-						// Router.push(goBackUrl);
+						const categories = await client.readQuery({ query: CATEGORIES });
+						const newList = categories.projectCategories.concat(res.data.saveProjectCategory);
+						client.writeData({ data: { projectCategories: newList } });
+						Router.push(goBackUrl);
 					}
 					// let cleanList = {};
 					// await onSubmit(cleanList);
@@ -108,7 +98,6 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
 				validate={validate}
 				render={({ handleSubmit, pristine, invalid, form: { change, blur } }) => (
 					<form onSubmit={handleSubmit}>
-						{console.log('MEDIA', uploadedImages)}
 						<Typography component="h5" variant="h5">
 							Nome da categoria
 						</Typography>
@@ -140,7 +129,7 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
 									{(fieldprops) => (
 										<Upload
 											{...fieldprops}
-											accept="image/*"
+											accept="image/.svg,.png"
 											name="upload-media"
 											handleUpload={(url) => handleUpload('media', url, change, blur)}
 										/>
@@ -151,8 +140,8 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
 						<Divider />
 						<div className={classes.column}>
 							{uploadedImages.icon && (
-								<span className="svg">
-									<ReactSVG src={uploadedImages.icon} />
+								<span className="icon">
+									<AnyImage src={uploadedImages.icon} size="30px" />
 								</span>
 							)}
 							{/* {!uploaded && project && project.image && <img src={project.image} />} */}
@@ -210,6 +199,9 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
 				)}
 			/>
 			<style jsx>{`
+				.icon {
+					width: 30px;
+				}
 				img {
 					max-width: 300px;
 					max-height: 300px;
