@@ -92,7 +92,7 @@ const formats = [
   "video"
 ]
 
-export default ({ onEditorStateChange, value }) => {
+export default ({ onEditorStateChange, value, height }) => {
   const [uploaded, setUploaded] = useState([])
   if (window) {
     return (
@@ -133,6 +133,7 @@ export default ({ onEditorStateChange, value }) => {
             value={value}
             modules={modules}
             formats={formats}
+            style={{ height: height, padding: "30px 0" }}
           />
         )}
       </Mutation>

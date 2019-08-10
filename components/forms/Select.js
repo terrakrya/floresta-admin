@@ -1,44 +1,55 @@
-import React from 'react';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import Avatar from '@material-ui/core/Avatar';
-import AddIcon from '@material-ui/icons/Add';
-import useConditionalEffect from 'use-conditional-effect';
+import React from "react"
+import Select from "@material-ui/core/Select"
+import InputLabel from "@material-ui/core/InputLabel"
+import MenuItem from "@material-ui/core/MenuItem"
+import OutlinedInput from "@material-ui/core/OutlinedInput"
+import Avatar from "@material-ui/core/Avatar"
+import AddIcon from "@material-ui/icons/Add"
+import useConditionalEffect from "use-conditional-effect"
 
-export default ({ label, create, createAction, selected, setSelected, items }) => {
-	function handleChange(event) {
-		if (event.target.value === 'create') {
-			createAction();
-		} else {
-			setSelected(event.target.value);
-		}
-	}
-	return (
-		<div>
-			<InputLabel htmlFor="outlined-age-simple">{label}</InputLabel>
-			{typeof items !== 'string' && (
-				<Select
-					value={selected || (items[0] ? items[0].name : '')}
-					onChange={handleChange}
-					input={<OutlinedInput name={`select`} id={`select`} />}
-				>
-					{items.map((item, index) => (
-						<MenuItem key={item.name} value={item.name} selected={index === 0}>
-							{item.name}
-						</MenuItem>
-					))}
-					{create && (
-						<MenuItem value={'create'}>
-							<Avatar>
-								<AddIcon />
-							</Avatar>
-							{create}
-						</MenuItem>
-					)}
-				</Select>
-			)}
-		</div>
-	);
-};
+export default ({
+  label,
+  create,
+  createAction,
+  selected,
+  setSelected,
+  items
+}) => {
+  function handleChange(event) {
+    if (event.target.value === "create") {
+      createAction()
+    } else {
+      setSelected(event.target.value)
+    }
+  }
+  return (
+    <div>
+      <InputLabel htmlFor='outlined-age-simple'>{label}</InputLabel>
+      {typeof items !== "string" && (
+        <Select
+          value={selected || (items[0] ? items[0].name : "")}
+          onChange={handleChange}
+          input={<OutlinedInput name={`select`} id={`select`} />}
+        >
+          {items.map((item, index) => (
+            <MenuItem
+              key={item.name || item}
+              value={item.name || item}
+              selected={index === 0}
+            >
+              {item.name || item}
+            </MenuItem>
+          ))}
+          {create && (
+            <MenuItem value={"create"}>
+              <Avatar>
+                <AddIcon />
+              </Avatar>
+              {create}
+            </MenuItem>
+          )}
+        </Select>
+      )}
+    </div>
+  )
+}

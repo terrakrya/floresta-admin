@@ -10,7 +10,6 @@ import Button from "@material-ui/core/Button"
 import Divider from "@material-ui/core/Divider"
 import Upload from "./Upload"
 import OutlineTextField from "./OutlineTextField"
-import TAGS from "../../queries/tags.gql"
 import StateContext from "../../lib/StateContext"
 
 const validate = values => {

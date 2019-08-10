@@ -1,8 +1,10 @@
-query {
- admins {
+query($id: String) {
+ admins(id: $id) {
   email
   role
   id
+  firstName
+  lastName
   posts {
     id
   }

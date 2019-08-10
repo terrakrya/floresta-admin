@@ -19,7 +19,7 @@ const NewsEdit = ({
       {!slug && !id && (
         <Mutation mutation={SAVE_NEWS}>
           {(saveNews, { error: errorSaveNews, client: clientSaveNews }) => {
-            return <NewsForm update={saveNews} client={clientSaveNews} />
+            return <NewsForm update={saveNews} client={clientSaveNews} create />
           }}
         </Mutation>
       )}

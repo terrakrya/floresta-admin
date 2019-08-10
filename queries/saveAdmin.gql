@@ -1,0 +1,6 @@
+mutation($input: AdminInput) {
+  saveAdmin(input: $input) {
+    id
+    email
+  }
+}

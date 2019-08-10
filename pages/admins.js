@@ -1,21 +1,23 @@
-import App from '../components/App'
-import { Query } from 'react-apollo'
-import ADMINS from '../queries/admins.gql'
-import AdminTable from '../components/AdminTable'
+import App from "../components/App"
+import { Query } from "react-apollo"
+import ADMINS from "../queries/admins.gql"
+// import AdminTable from '../components/AdminTable'
+import Table from "../components/Table"
 
 export default () => (
   <App>
-    <Query query={ADMINS}>
-      {({ loading: loadingAdmins, error: errorAdmins, data: dataAdmins }) => {
-        if (loadingAdmins) return <h1>Loading</h1>
-        if (errorAdmins) {
-          console.log(errorAdmins)
-          return <h1>Error</h1>
-        }
-        console.log(dataAdmins)
-        if (dataAdmins && dataAdmins.admins) return <AdminTable admins={dataAdmins.admins} />
-        else return <h1>O Vazio!</h1>
-      }}
-    </Query>
+    <Table
+      query={ADMINS}
+      returnUrl={"/admins"}
+      editUrl={"/admin_edit?id="}
+      title='Administradores'
+      columns={[
+        { title: "ID", field: "id" },
+        { title: "E-mail", field: "email" },
+        { title: "Nome", field: "firstName" },
+        { title: "Sobrenome", field: "lastName" },
+        { title: "Função", field: "role" }
+      ]}
+    />
   </App>
 )

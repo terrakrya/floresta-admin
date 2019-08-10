@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button"
 import Divider from "@material-ui/core/Divider"
 import Paper from "@material-ui/core/Paper"
 import Upload from "./Upload"
-import Loading from "./Upload"
+import Loading from "../Loading"
 import AnyImage from "../AnyImage"
 import OutlineTextField from "./OutlineTextField"
 
@@ -132,7 +132,7 @@ class HomeForm extends Component {
                 }}
               >
                 {((content && content.logo) || this.state.logo) && (
-                  <img src={content.logo} />
+                  <AnyImage src={content.logo} />
                 )}
                 {!this.state.logo && !(content && content.logo) && (
                   <h4>Sem logo...</h4>

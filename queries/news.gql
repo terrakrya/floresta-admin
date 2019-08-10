@@ -5,5 +5,12 @@ query($id: String) {
    link
    title
    media
+   post {
+     id
+     author {
+      firstName
+      lastName
+    }
+   }
  }  
 }
