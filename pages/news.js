@@ -8,11 +8,12 @@ export default ({ classes }) => {
       <Table
         query={NEWS_ALL}
         returnUrl={"/news"}
+        editUrl={"/news_edit?id="}
         title='Noticias'
         columns={[
           { title: "ID", field: "id" },
           { title: "Titulo", field: "title" },
-          { title: "Criado", field: "createdAt" }
+          { title: "Criado", field: "createdAt", type: "datetime" }
         ]}
       />
       <style jsx>{``}</style>

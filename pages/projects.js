@@ -2,6 +2,7 @@ import App from "../components/App"
 import { withStyles } from "@material-ui/core/styles"
 import PROJECTS from "../queries/projects.gql"
 import Table from "../components/Table"
+import Form from "../components/forms/contentForm"
 
 const styles = {
   fab: {
@@ -13,6 +14,11 @@ const styles = {
 
 const Projects = ({ classes }) => (
   <App>
+    <Form
+      title='Texto sobre a página'
+      field='projectsHtml'
+      style={{ paddingBottom: 80 }}
+    />
     <Table
       query={PROJECTS}
       title='Projetos'

@@ -1,8 +1,9 @@
 import { Query } from "react-apollo"
-import MaterialTable from "material-table"
+import MaterialTable, { MTableCell } from "material-table"
 import { useEffect } from "react"
 import { withRouter } from "next/router"
 
+import friendlyDate from "../lib/friendlyDate"
 import Loading from "../components/Loading"
 import Error from "../components/Error"
 
@@ -54,10 +55,25 @@ const List = ({
       title={title || "Tabela"}
       columns={columns}
       actions={actions}
+      components={{
+        Cell: props => {
+          let changedProps = {}
+          if (props.columnDef.field === "id") {
+            let mutValue = props.value
+            changedProps.value = mutValue.substring(20, 26)
+          }
+          if (props.columnDef.field === "createdAt") {
+            let mutValue = props.value
+            changedProps.value = friendlyDate(mutValue)
+          }
+          return <MTableCell {...props} {...changedProps} />
+        }
+      }}
       data={data}
       options={{
         search: true,
-        actionsColumnIndex: -1
+        actionsColumnIndex: -1,
+        pageSize: 10
       }}
       localization={{
         body: {

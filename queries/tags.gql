@@ -7,5 +7,6 @@ query($id: String) {
     description
     media
     photos
+    createdAt
   }
 }
