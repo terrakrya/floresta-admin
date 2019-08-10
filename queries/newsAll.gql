@@ -1,9 +1,8 @@
 query {
  newsAll {
    id
-   description
+   createdAt
    link
    title
-   media
  }  
 }

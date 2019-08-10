@@ -6,9 +6,7 @@ mutation($input: ProjectInput!) {
       description
       media
       photos
-      category {
-        id
-      }
+      categories
       tags {
         id
       }

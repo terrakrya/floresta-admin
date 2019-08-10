@@ -1,11 +1,13 @@
-query($slug: String) {
-  projectCategories(slug: $slug) {
+query($category: ProjectCategory) {
+  categories(category: $category) {
     id
     name
     slug
+    intro
     description
     media
     icon
-    photos
+    category
+    createdAt
   }
 }

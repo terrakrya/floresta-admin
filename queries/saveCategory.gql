@@ -1,11 +1,10 @@
-mutation($input: ProjectCategoryInput!) {
-  saveProjectCategory(input: $input) {
-    id
+mutation($input: CategoryInput!) {
+  saveCategory(input: $input) {
     name
-    slug
+    intro
     description
     media
     icon
-    photos
+    category
   }
 }

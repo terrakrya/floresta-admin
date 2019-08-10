@@ -1,12 +1,7 @@
 query($slug: String $id: String) {
  project(slug: $slug id: $id) {
    id
-   category {
-     id
-     name
-     slug
-      icon
-   }
+   categories
    tags {
      id
      name
@@ -16,6 +11,7 @@ query($slug: String $id: String) {
    slug
    photos
    media
+   intro
    description
  }  
 }

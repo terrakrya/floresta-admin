@@ -1,17 +1,19 @@
 import App from "../components/App"
-import NEWS_ALL from "../queries/newsAll.gql"
+import CATEGORIES from "../queries/categories.gql"
 import Table from "../components/Table"
 
 export default ({ classes }) => {
   return (
     <App>
       <Table
-        query={NEWS_ALL}
-        returnUrl={"/news"}
-        title='Noticias'
+        query={CATEGORIES}
+        returnUrl={"/categories"}
+        editUrl='/category_edit?id='
+        title='Linhas de Acao'
+        noCreate
         columns={[
           { title: "ID", field: "id" },
-          { title: "Titulo", field: "title" },
+          { title: "Nome", field: "name" },
           { title: "Criado", field: "createdAt" }
         ]}
       />

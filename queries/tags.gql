@@ -1,8 +1,9 @@
-query($slug: String) {
-  projectTags(slug: $slug) {
+query($id: String) {
+  projectTags(id: $id) {
     id
     name
     slug
+    intro
     description
     media
     photos

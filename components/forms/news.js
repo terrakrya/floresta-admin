@@ -49,8 +49,8 @@ const styles = theme => ({
 })
 
 const NewsForm = ({ classes, update, data, remove, client }) => {
-  const { previousPagePath } = React.useContext(StateContext)
-  const goBackUrl = previousPagePath || "/news_edit"
+  // const { previousPagePath } = React.useContext(StateContext)
+  const goBackUrl = "/news"
   const [uploadedImage, setUpload] = React.useState(
     data && data.media ? data.media : null
   )
@@ -63,7 +63,6 @@ const NewsForm = ({ classes, update, data, remove, client }) => {
     blur("description")
     change("description", editor)
   }
-  console.log("DATA", data)
   return (
     <Paper className={classes.root} elevation={1}>
       <Form
@@ -77,7 +76,7 @@ const NewsForm = ({ classes, update, data, remove, client }) => {
           const res = await update({ variables: { input: cleanVars } })
           console.log("RES", res)
           if (res && res.data) {
-            Router.push(goBackUrl)
+            Router.push(`${goBackUrl}?refresh`)
           }
         }}
         validate={validate}
@@ -161,7 +160,7 @@ const NewsForm = ({ classes, update, data, remove, client }) => {
                   // );
                   // console.log('newList', newList);
                   // client.writeData({ data: { projectCategories: newList } });
-                  Router.push(goBackUrl)
+                  Router.push(`${goBackUrl}?refresh`)
                 }}
               >
                 Remover

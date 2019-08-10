@@ -2,32 +2,8 @@ query {
  projects {
    id
    createdAt
-   updatedAt
-   category {
-     id
-     createdAt
-     updatedAt
-     name
-     slug
-     photos
-     media
-     icon
-     description
-   }
-   tags {
-     id
-     createdAt
-     updatedAt
-     name
-     slug
-     photos
-     media
-     description
-   }
+   categories
    name
    slug
-   photos
-   media
-   description
  }  
 }
