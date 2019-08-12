@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import { useEffect } from "react"
 import Router from "next/router"
 import { Form, Field } from "react-final-form"
 import PropTypes from "prop-types"
@@ -45,25 +45,35 @@ const styles = theme => ({
     alignItems: "center",
     justifyContent: "space-around",
     flexBasis: "33.33%",
-    width: "100%"
+    width: "100%",
+    padding: "20px 0"
   }
 })
 
 const VillageForm = ({ classes, update, data, remove, client }) => {
   const goBackUrl = "/villages"
   const initialMedia = data && data.media ? data.media : null
+  const initialPhotos = data && data.photos ? data.photos : []
   const [uploadedImage, setUpload] = React.useState(initialMedia)
+  const [uploadedPhotos, setPhotosUpload] = React.useState(initialPhotos)
+
   const handleUpload = (uploaded, change, blur) => {
     blur("media")
     change("media", uploaded[0])
     setUpload(uploaded[0])
   }
-
-  const onEditorStateChange = (editor, change, blur) => {
-    blur("description")
-    change("description", editor)
+  const handlePhotosUpload = (uploaded, change, blur) => {
+    const newList = uploadedPhotos.concat(uploaded)
+    blur("photos")
+    change("photos", newList)
+    setPhotosUpload(newList)
   }
-  console.log("DATA", data)
+
+  const onEditorStateChange = (editor, type, change, blur) => {
+    blur(type)
+    change(type, editor)
+  }
+
   return (
     <Paper className={classes.root} elevation={1}>
       <Form
@@ -104,13 +114,32 @@ const VillageForm = ({ classes, update, data, remove, client }) => {
               inputType={"text"}
             />
             <Typography component='h5' variant='h5'>
+              Link no mapa
+            </Typography>
+            <Field
+              name={"mapLink"}
+              component={OutlineTextField}
+              inputType={"text"}
+            />
+            {/* <Typography component='h5' variant='h5'>
+              Introdução da aldeia
+            </Typography>
+            <Field
+              name={"intro"}
+              component={OutlineTextField}
+              inputType={"html"}
+              handleEditor={e => onEditorStateChange(e, "intro", change, blur)}
+            />
+            <Typography component='h5' variant='h5'>
               Descrição da aldeia
             </Typography>
             <Field
               name={"description"}
               component={OutlineTextField}
               inputType={"html"}
-              handleEditor={e => onEditorStateChange(e, change, blur)}
+              handleEditor={e =>
+                onEditorStateChange(e, "description", change, blur)
+              }
             />
             <div className={classes.column}>
               <Typography component='h4' variant='h4'>
@@ -120,7 +149,7 @@ const VillageForm = ({ classes, update, data, remove, client }) => {
             <div className={classes.column}>
               {uploadedImage && <img src={uploadedImage} />}
               {!uploadedImage && <h4>Esta aldeia não tem imagem de capa</h4>}
-            </div>
+            </div> */}
             <div className={classNames(classes.column, classes.helper)}>
               <Typography variant='caption'>
                 Selecionar imagem de capa
@@ -128,9 +157,42 @@ const VillageForm = ({ classes, update, data, remove, client }) => {
                 <Field name='image'>
                   {fieldprops => (
                     <Upload
+                      name='village-media-upload'
                       {...fieldprops}
                       accept='image/*'
                       handleUpload={url => handleUpload(url, change, blur)}
+                    />
+                  )}
+                </Field>
+              </Typography>
+            </div>
+            <div className={classes.column}>
+              <Typography component='h4' variant='h4'>
+                Fotos da aldeia
+              </Typography>
+            </div>
+            <div className={classNames(classes.column, classes.helper)}>
+              <Typography variant='caption'>
+                Selecionar fotos da aldeia
+                <br />
+                {uploadedPhotos &&
+                  uploadedPhotos.map((p, key) => (
+                    <img
+                      key={key}
+                      src={p}
+                      style={{ maxWidth: `${100 / uploadedPhotos.length}%` }}
+                    />
+                  ))}
+                <Field name='photos'>
+                  {fieldprops => (
+                    <Upload
+                      name='village-photos-upload'
+                      {...fieldprops}
+                      accept='image/*'
+                      multiple={true}
+                      handleUpload={url =>
+                        handlePhotosUpload(url, change, blur)
+                      }
                     />
                   )}
                 </Field>

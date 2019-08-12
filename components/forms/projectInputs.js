@@ -61,9 +61,7 @@ export default ({
         data.categories &&
         loadedCategories.length > 0
       ) {
-        const catNames = data.categories.map(
-          datCat => categories.filter(cat => cat.category === datCat)[0].name
-        )
+        const catNames = data.categories.map(datCat => datCat.name)
         handleSelectCategories(catNames)
       }
       if (!formState.tags && data.tags) {

@@ -81,7 +81,7 @@ const TagForm = ({
         onSubmit={async e => {
           const cleanVars = {}
           Object.keys(e).map(i => {
-            if (i !== "__typename" && i !== "tableData")
+            if (i !== "__typename" && i !== "tableData" && i !== "createdAt")
               Object.assign(cleanVars, { [i]: e[i] })
           })
           const res = await update({ variables: { input: cleanVars } })

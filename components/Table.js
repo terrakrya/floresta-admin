@@ -66,6 +66,26 @@ const List = ({
             let mutValue = props.value
             changedProps.value = friendlyDate(mutValue)
           }
+          if (props.columnDef.field.match(/\./g)) {
+            let mutValue = props.columnDef.field
+              .split(".")
+              .reduce((prev, curr, index) => {
+                if (index === 1) {
+                  if (Array.isArray(props.rowData[prev])) {
+                    return props.rowData[prev].map(data => data[curr])
+                  }
+                  return props.rowData[prev][curr]
+                } else {
+                  console.log(prev, curr, index, props.rowData[prev])
+                  console.log("seconds")
+                  return prev[curr]
+                }
+              })
+            if (Array.isArray(mutValue)) {
+              mutValue = mutValue.join(", ")
+            }
+            changedProps.value = mutValue.toString()
+          }
           return <MTableCell {...props} {...changedProps} />
         }
       }}

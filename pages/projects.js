@@ -27,6 +27,7 @@ const Projects = ({ classes }) => (
       columns={[
         { title: "ID", field: "id" },
         { title: "Nome", field: "name" },
+        { title: "Linhas de Ação", field: "categories.name" },
         { title: "Criado", field: "createdAt" }
       ]}
     />

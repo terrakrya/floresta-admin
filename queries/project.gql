@@ -1,7 +1,11 @@
 query($slug: String $id: String) {
  project(slug: $slug id: $id) {
    id
-   categories
+   categories {
+     id
+     name
+     slug
+   }
    tags {
      id
      name

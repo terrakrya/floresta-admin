@@ -6,7 +6,6 @@ query {
    name
    slug
    photos
-   media
-   description
+   mapLink
  }  
 }

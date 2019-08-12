@@ -2,7 +2,11 @@ query {
  projects {
    id
    createdAt
-   categories
+   categories {
+     slug
+     id
+     name
+   }
    name
    slug
  }  

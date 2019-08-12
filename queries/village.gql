@@ -4,7 +4,6 @@ query($slug: String $id: String) {
    name
    slug
    photos
-   media
-   description
+   mapLink
  }  
 }
