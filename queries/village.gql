@@ -1,4 +1,4 @@
-query($slug: String $id: String) {
+query($slug: String $id: ID) {
  village(slug: $slug id: $id) {
    id
    name

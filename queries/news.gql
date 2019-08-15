@@ -1,4 +1,4 @@
-query($id: String) {
+query($id: ID) {
  news(id: $id) {
    id
    description

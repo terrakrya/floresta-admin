@@ -1,4 +1,4 @@
-query($slug: String $id: String) {
+query($slug: String $id: ID) {
  project(slug: $slug id: $id) {
    id
    categories {

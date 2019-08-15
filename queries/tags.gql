@@ -1,4 +1,4 @@
-query($id: String) {
+query($id: ID) {
   projectTags(id: $id) {
     id
     name
