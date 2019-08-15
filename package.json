@@ -7,7 +7,7 @@
     "export": "next export",
     "now-build": "next build && next export -o dist",
     "build:analyze": "BUNDLE_ANALYZE=both npm run build",
-    "start": "NODE_ENV=production API_HOST=https://florestaprotegida-api.luandro.com next start -p 3005"
+    "start": "NODE_ENV=production API_HOST='https://floresta-server.encenar.tk' next start -p 3005"
   },
   "dependencies": {
     "@material-ui/core": "^4.1.0",
@@ -37,7 +37,6 @@
     "next-offline": "^4.0.2",
     "next-optimized-images": "^2.3.3",
     "next-plugin-graphql": "^0.0.2",
-    "next-seo": "^1.2.0",
     "nprogress": "^0.2.0",
     "preact": "^8.3.1",
     "preact-compat": "^3.18.4",

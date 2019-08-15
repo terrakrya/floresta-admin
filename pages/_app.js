@@ -1,7 +1,6 @@
 import App, { Container } from "next/app"
 import React from "react"
 import { ApolloProvider } from "react-apollo"
-import NextSeo from "next-seo"
 import Router from "next/router"
 import NProgress from "nprogress"
 import { ThemeProvider } from "@material-ui/styles"
@@ -9,7 +8,6 @@ import CssBaseline from "@material-ui/core/CssBaseline"
 import "draft-js/dist/Draft.css"
 import "react-quill/dist/quill.snow.css" // QUILL
 
-import SEO from "../next-seo.config"
 import withApolloClient from "../lib/with-apollo-client"
 import theme from "../lib/theme"
 import StateContext from "../lib/StateContext"
@@ -41,7 +39,6 @@ class Admin extends App {
     const { Component, pageProps, apolloClient } = this.props
     return (
       <Container>
-        <NextSeo config={SEO} />
         <ApolloProvider client={apolloClient}>
           <ThemeProvider theme={theme}>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
