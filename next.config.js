@@ -10,7 +10,10 @@ const stage = process.env.UP_STAGE
 const nextConfig = {
   assetPrefix: stage ? `/${stage}` : "",
   env: {
-    API_HOST: "http://localhost:4000"
+    API_HOST:
+      process.env.NODE_ENV === "production"
+        ? process.env.API_HOST
+        : "http://localhost:4000"
   }
   // serverRuntimeConfig: {
   // 	// Will only be available on the server side
