@@ -30,6 +30,7 @@ const AdminEdit = ({
                 saveAdmin,
                 { error: errorSaveAdmin, client: clientSaveAdmin }
               ) => {
+                console.log(data)
                 if (!loading && !error && data) {
                   return (
                     <Form

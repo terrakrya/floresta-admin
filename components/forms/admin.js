@@ -51,8 +51,9 @@ const styles = theme => ({
 const roles = ["ADMIN", "EDITOR", "READER"]
 
 const AdminForm = ({ classes, update, data, error }) => {
+  console.log(data)
   const goBackUrl = "/admins"
-  const [formState, setFormState] = React.useState(data.role || roles[0])
+  const [formState, setFormState] = React.useState(data ? data.role : roles[0])
   const handleSelect = (e, change, blur) => {
     console.log("e", e)
     blur("role")
@@ -62,7 +63,13 @@ const AdminForm = ({ classes, update, data, error }) => {
   return (
     <Paper className={classes.root} elevation={1}>
       <Form
-        initialValues={data ? data : {}}
+        initialValues={
+          data
+            ? data
+            : {
+                role: roles[0]
+              }
+        }
         onSubmit={async e => {
           const cleanVars = {}
           Object.keys(e).map(i => {
