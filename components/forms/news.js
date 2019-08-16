@@ -53,7 +53,6 @@ const styles = theme => ({
 })
 
 const NewsForm = ({ classes, update, data, remove, client, create }) => {
-  // const { previousPagePath } = useContext(StateContext)
   const goBackUrl = "/news"
   const [selectedMode, setSelectedMode] = useState("link")
   const [uploadedImage, setUpload] = useState(
@@ -139,7 +138,10 @@ const NewsForm = ({ classes, update, data, remove, client, create }) => {
             </div>
             {selectedMode === "post" && (
               <span className='author'>
-                por {data.post.author.firstName} {data.post.author.lastName}
+                {data &&
+                  `por ${data.post.author.firstName} ${
+                    data.post.author.lastName
+                  }`}
               </span>
             )}
             <div className={classes.column}>
