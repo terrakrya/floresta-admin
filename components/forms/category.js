@@ -62,11 +62,10 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
   const handleUpload = (type, uploaded, change, blur) => {
     blur(type)
     change(type, uploaded[0])
-    setUpload(
-      Object.assign(uploadedImages, {
-        [type]: uploaded[0]
-      })
-    )
+    setUpload({
+      ...uploadedImages,
+      [type]: uploaded[0]
+    })
   }
 
   const onEditorStateChange = (editor, field, change, blur) => {
@@ -146,7 +145,6 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
             </div>
             <div className={classes.column}>
               {uploadedImages.media && <img src={uploadedImages.media} />}
-              {/* {!uploaded && project && project.image && <img src={project.image} />} */}
               {!uploadedImages.media && (
                 <h4>Esta categoria não tem imagem de capa</h4>
               )}

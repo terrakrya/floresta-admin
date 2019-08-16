@@ -63,15 +63,13 @@ class HomeForm extends Component {
     })
 
   toggleSubmit = () => {
-    this.setState(
-      Object.assign(this.state, { submitting: !this.state.submitting })
-    )
+    this.setState({ ...this.state, submitting: !this.state.submitting })
   }
 
   handleUpload = (uploaded, field, change, blur) => {
     blur(field)
     change(field, uploaded[0])
-    this.setState(Object.assign(this.state, { [field]: uploaded[0] }))
+    this.setState({ ...this.state, [field]: uploaded[0] })
   }
 
   render() {
@@ -132,7 +130,7 @@ class HomeForm extends Component {
                 }}
               >
                 {((content && content.logo) || this.state.logo) && (
-                  <AnyImage src={content.logo} />
+                  <AnyImage src={this.state.logo || content.logo} />
                 )}
                 {!this.state.logo && !(content && content.logo) && (
                   <h4>Sem logo...</h4>
