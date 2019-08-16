@@ -52,7 +52,6 @@ const styles = theme => ({
 })
 
 const CategoryForm = ({ classes, update, data, remove, client }) => {
-  const { previousPagePath } = React.useContext(StateContext)
   const goBackUrl = "/categories"
   const initialImages = {
     icon: data && data.icon ? data.icon : null,

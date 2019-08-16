@@ -19,6 +19,7 @@ const List = ({
   noCreate
 }) => {
   const createUrl = editUrl.split("?")[0]
+  const queryVar = editUrl.split("?")[1].split("=")[0]
   useEffect(() => {
     if (doRefresh) {
       async function reload() {
@@ -32,8 +33,7 @@ const List = ({
     {
       icon: "edit",
       tooltip: "Editar",
-      onClick: (event, rowData) =>
-        push(`${editUrl || "/news_edit?id="}${rowData.id}`)
+      onClick: (event, rowData) => push(editUrl + rowData[queryVar])
     },
     {
       icon: "refresh",
@@ -47,7 +47,7 @@ const List = ({
       icon: "add",
       tooltip: "Criar",
       isFreeAction: true,
-      onClick: event => push(createUrl || "/news_edit")
+      onClick: event => push(createUrl)
     })
   }
   return (

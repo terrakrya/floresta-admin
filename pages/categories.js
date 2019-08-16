@@ -14,12 +14,13 @@ export default ({ classes }) => {
       <Table
         query={CATEGORIES}
         returnUrl={"/categories"}
-        editUrl='/category_edit?id='
+        editUrl='/category_edit?category='
         title='Linhas de Acao'
         noCreate
         columns={[
           { title: "ID", field: "id" },
           { title: "Nome", field: "name" },
+          { title: "Category", field: "category" },
           { title: "Criado", field: "createdAt" }
         ]}
       />

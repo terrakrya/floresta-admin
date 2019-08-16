@@ -57,7 +57,6 @@ const TagForm = ({
   remove,
   client
 }) => {
-  const { previousPagePath } = React.useContext(StateContext)
   const goBackUrl = "/tags"
 
   const initialMedia = data && data.media ? data.media : null

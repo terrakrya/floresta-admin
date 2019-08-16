@@ -72,14 +72,14 @@ class Login extends Component {
                         })
                         if (res && res.data.login.token) {
                           setToken(res.data.login.token)
-                          clientLogin.writeData({
-                            data: {
-                              user: {
-                                __typename: "user",
-                                ...res.data.login.user
-                              }
-                            }
-                          })
+                          // clientLogin.writeData({
+                          //   data: {
+                          //     user: {
+                          //       __typename: "user",
+                          //       ...res.data.login.user
+                          //     }
+                          //   }
+                          // })
                           Router.push("/")
                         }
                       }}
