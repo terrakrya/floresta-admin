@@ -75,6 +75,7 @@ const NewsForm = ({ classes, update, data, remove, client, create }) => {
       setSelectedMode("post")
     }
   }, [data])
+  
   return (
     <Paper className={classes.root} elevation={1}>
       <Form

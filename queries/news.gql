@@ -2,6 +2,7 @@ query($id: ID) {
  news(id: $id) {
    id
    description
+   intro
    link
    title
    media

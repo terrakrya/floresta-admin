@@ -92,7 +92,7 @@ const formats = [
   "video"
 ]
 
-export default ({ onEditorStateChange, value, height }) => {
+export default ({ onEditorStateChange, value, height, maxLength, name }) => {
   const [uploaded, setUploaded] = useState([])
   if (window) {
     return (
@@ -100,35 +100,39 @@ export default ({ onEditorStateChange, value, height }) => {
         {upload => (
           <ReactQuill
             onChange={(content, delta, source, editor) => {
-              const contents = editor.getContents()
-              const images = contents.ops
-                .filter(c => c.insert.image)
-                .map(c => c.insert.image)
-                .map(async image => {
-                  const name = hashCode(image)
-                  const isBase64 = image.split("image/")
-                  if (isBase64[1]) {
-                    const format = isBase64[1].split(";")[0]
-                    const file = dataURLtoFile(image, `${name}.${format}`)
-                    await upload({
-                      variables: {
-                        file
-                      }
-                    }).then(res => {
-                      if (res && res.data.uploadFile) {
-                        const url = res.data.uploadFile.url
-                        // setUploaded(uploaded.push(name))
-                        // console.log(uploaded)
-                        const newContent = content.replace(image, url)
-                        // console.log("SUBS", newContent)
-                        return onEditorStateChange(newContent)
-                      }
-                    })
-                  }
-                })
-
-              return onEditorStateChange(content)
+              console.log(editor.getLength(), maxLength)
+              if (!maxLength || editor.getLength() <= maxLength) {
+                const contents = editor.getContents()
+                const images = contents.ops
+                  .filter(c => c.insert.image)
+                  .map(c => c.insert.image)
+                  .map(async image => {
+                    const imageName = hashCode(image)
+                    const isBase64 = image.split("image/")
+                    if (isBase64[1]) {
+                      const format = isBase64[1].split(";")[0]
+                      const file = dataURLtoFile(image, `${imageName}.${format}`)
+                      await upload({
+                        variables: {
+                          file
+                        }
+                      }).then(res => {
+                        if (res && res.data.uploadFile) {
+                          const url = res.data.uploadFile.url
+                          // setUploaded(uploaded.push(name))
+                          // console.log(uploaded)
+                          const newContent = content.replace(image, url)
+                          // console.log("SUBS", newContent)
+                          return onEditorStateChange(newContent)
+                        }
+                      })
+                    }
+                  })
+  
+                return onEditorStateChange(content)
+              }
             }}
+            name={name}
             defaultValue={value}
             value={value}
             modules={modules}

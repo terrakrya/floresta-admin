@@ -5,5 +5,6 @@ mutation($input: NewsInput!) {
     link
     title
     media
+    intro
   }
 }
