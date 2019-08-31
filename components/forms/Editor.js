@@ -100,7 +100,7 @@ export default ({ onEditorStateChange, value, height, maxLength, name }) => {
         {upload => (
           <ReactQuill
             onChange={(content, delta, source, editor) => {
-              console.log(editor.getLength(), maxLength)
+              // console.log(editor.getLength(), maxLength)
               if (!maxLength || editor.getLength() <= maxLength) {
                 const contents = editor.getContents()
                 const images = contents.ops

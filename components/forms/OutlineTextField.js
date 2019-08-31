@@ -239,7 +239,6 @@ const OutlineTextField = ({
   maxLength,
   ...rest
 }) => {
-  console.log('input', input.name)
   if (inputType === 'html') {
     return (
       <Editor

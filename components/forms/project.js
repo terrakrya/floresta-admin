@@ -1,53 +1,53 @@
-import React from "react"
-import Router from "next/router"
-import PropTypes from "prop-types"
-import { withStyles } from "@material-ui/core/styles"
+import React from 'react'
+import Router from 'next/router'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
 // import isISODate from 'is-iso-date';
 
-import ProjectInputs from "./projectInputs"
+import ProjectInputs from './projectInputs'
 
 const styles = theme => ({
   container: {
-    display: "flex",
-    flexFlow: "row wrap"
+    display: 'flex',
+    flexFlow: 'row wrap'
   },
   root: {
-    display: "flex",
-    flexFlow: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexFlow: 'column',
+    alignItems: 'center',
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing(1) * 2,
     paddingBottom: theme.spacing(1) * 2
   },
   full: {
-    flexBasis: "100%"
+    flexBasis: '100%'
   },
   column: {
-    display: "flex",
-    flexFlow: "row nowrap",
-    alignItems: "center",
-    justifyContent: "space-around",
-    flexBasis: "33.33%",
-    width: "100%"
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    flexBasis: '33.33%',
+    width: '100%'
   },
   inputs: {
     minWidth: 300,
-    display: "flex",
-    flexFlow: "column",
-    alignItems: "center"
+    display: 'flex',
+    flexFlow: 'column',
+    alignItems: 'center'
   },
   selectors: {
     height: 400,
-    display: "flex",
-    flexFlow: "column",
-    alignItems: "center",
-    justifyContent: "space-around"
+    display: 'flex',
+    flexFlow: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-around'
   },
   footer: {
-    display: "flex",
-    flexFlow: "row nowrap",
-    alignItems: "center",
-    justifyContent: "space-around",
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    alignItems: 'center',
+    justifyContent: 'space-around',
     paddingTop: 50
   }
 })
@@ -63,12 +63,12 @@ const ProjectForm = ({
 }) => {
   // Form
   const initialState = {
-    media: "",
+    media: '',
     categories: null,
     tags: null,
-    name: "",
-    description: "",
-    intro: "",
+    name: '',
+    description: '',
+    intro: '',
     photos: null
   }
   const [formState, setFormState] = React.useState(initialState)
@@ -90,7 +90,7 @@ const ProjectForm = ({
     setFormState({ ...formState, photos: uploaded })
   }
   // Dialogs
-  function handleClickOpen(dialog) {
+  function handleClickOpen (dialog) {
     setDialog({ ...dialogOpen, [dialog]: true })
   }
 
@@ -120,7 +120,6 @@ const ProjectForm = ({
     }
     formatedInputs.categories = state.categories.map(i => {
       const res = categories.filter(c => c.name === i)
-      console.log("TCL: res", res[0].category)
       return res[0].category
     })
     let tagsId = []
@@ -132,11 +131,11 @@ const ProjectForm = ({
       })
     })
     formatedInputs.tags = tagsId
-    console.log("formatedInputs", formatedInputs)
+    console.log('formatedInputs', formatedInputs)
     const res = await update({ variables: { input: formatedInputs } })
-    console.log("RES", res)
+    console.log('RES', res)
     if (res && res.data) {
-      Router.push("/projects?refresh")
+      Router.push('/projects?refresh')
     }
   }
   return (
