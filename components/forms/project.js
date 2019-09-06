@@ -123,13 +123,16 @@ const ProjectForm = ({
       return res[0].category
     })
     let tagsId = []
-    state.tags.map(tag => {
-      tags.map(t => {
-        if (t.name === tag) {
-          tagsId.push(t.id)
-        }
+    if (state.tags) {
+      state.tags.map(tag => {
+        tags.map(t => {
+          if (t.name === tag) {
+            tagsId.push(t.id)
+          }
+        })
       })
-    })
+    }
+
     formatedInputs.tags = tagsId
     console.log('formatedInputs', formatedInputs)
     const res = await update({ variables: { input: formatedInputs } })
