@@ -13,5 +13,7 @@ mutation($input: ContentInput!) {
     categoriesHtml
     youtubeLink
     facebookLink
+    flickrLink
+    instagramLink
   }
 }

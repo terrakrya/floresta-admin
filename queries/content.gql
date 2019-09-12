@@ -13,5 +13,7 @@ query {
     categoriesHtml
     youtubeLink
     facebookLink
+    flickrLink
+    instagramLink
   } 
 }

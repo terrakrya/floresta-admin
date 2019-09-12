@@ -91,7 +91,9 @@ class HomeForm extends Component {
               i === "subTitle" ||
               i === "title" ||
               i === "youtubeLink" ||
-              i === "facebookLink"
+              i === "facebookLink" ||
+              i === "flickrLink" ||
+              i === "instagramLink"
             ) {
               cleanList[i] = e[i]
             }
@@ -230,6 +232,24 @@ class HomeForm extends Component {
                     component={OutlineTextField}
                     inputType='text'
                     label='url Youtube'
+                    fullWidth
+                  />
+                </div>
+                <div className={classes.full}>
+                  <Field
+                    name='flickrLink'
+                    component={OutlineTextField}
+                    inputType='text'
+                    label='url Flickr'
+                    fullWidth
+                  />
+                </div>
+                <div className={classes.full}>
+                  <Field
+                    name='instagramLink'
+                    component={OutlineTextField}
+                    inputType='text'
+                    label='url Instagram'
                     fullWidth
                   />
                 </div>
