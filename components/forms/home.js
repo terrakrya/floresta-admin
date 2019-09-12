@@ -1,16 +1,16 @@
-import React, { Component, useState } from "react"
-import { Form, Field } from "react-final-form"
-import PropTypes from "prop-types"
-import { withStyles } from "@material-ui/core/styles"
-import classNames from "classnames"
-import Typography from "@material-ui/core/Typography"
-import Button from "@material-ui/core/Button"
-import Divider from "@material-ui/core/Divider"
-import Paper from "@material-ui/core/Paper"
-import Upload from "./Upload"
-import Loading from "../Loading"
-import AnyImage from "../AnyImage"
-import OutlineTextField from "./OutlineTextField"
+import React, { Component, useState } from 'react'
+import { Form, Field } from 'react-final-form'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import classNames from 'classnames'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import Divider from '@material-ui/core/Divider'
+import Paper from '@material-ui/core/Paper'
+import Upload from './Upload'
+import Loading from '../Loading'
+import AnyImage from '../AnyImage'
+import OutlineTextField from './OutlineTextField'
 
 const validate = values => {
   const errors = {}
@@ -28,38 +28,38 @@ const validate = values => {
 
 const styles = theme => ({
   root: {
-    display: "flex",
-    flexFlow: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexFlow: 'column',
+    alignItems: 'center',
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing(1) * 2,
     paddingBottom: theme.spacing(1) * 2
   },
   full: {
-    flexBasis: "100%"
+    flexBasis: '100%'
   },
   column: {
-    display: "flex",
-    flexFlow: "row nowrap",
-    alignItems: "center",
-    justifyContent: "space-around",
-    flexBasis: "33.33%",
-    width: "100%",
-    padding: "20px 0"
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    flexBasis: '33.33%',
+    width: '100%',
+    padding: '20px 0'
   }
 })
 
 class HomeForm extends Component {
   state = {
     logo: null,
-    headerImage: null,
+    headerImages: [],
     submitting: false
   }
 
   clearUpload = () =>
     this.setState({
       logo: null,
-      headerImage: null
+      // headerImages: []
     })
 
   toggleSubmit = () => {
@@ -68,12 +68,25 @@ class HomeForm extends Component {
 
   handleUpload = (uploaded, field, change, blur) => {
     blur(field)
-    change(field, uploaded[0])
-    this.setState({ ...this.state, [field]: uploaded[0] })
+    const upload =
+      field === 'headerImages'
+        ? this.state.headerImages.concat(uploaded)
+        : uploaded[0]
+    change(field, upload)
+    this.setState({ ...this.state, [field]: upload })
   }
 
-  render() {
+  componentDidMount() {
+    if (this.props.content &&  this.props.content.headerImages ) {
+      this.setState({
+        headerImages: this.props.content.headerImages.concat(this.state.headerImages)
+      })
+    }
+  }
+
+  render () {
     const { classes, update, content, refetch } = this.props
+    const { headerImages } = this.state
     return (
       <Form
         className={classes.root}
@@ -86,14 +99,14 @@ class HomeForm extends Component {
             if (Array.isArray(e[i]) && e[i].length > 0) {
               cleanList[i] = e[i]
             } else if (
-              (!Array.isArray(e[i]) && e[i] !== null && i === "logo") ||
-              i === "headerImage" ||
-              i === "subTitle" ||
-              i === "title" ||
-              i === "youtubeLink" ||
-              i === "facebookLink" ||
-              i === "flickrLink" ||
-              i === "instagramLink"
+              (!Array.isArray(e[i]) && e[i] !== null && i === 'logo') ||
+              i === 'headerImages' ||
+              i === 'subTitle' ||
+              i === 'title' ||
+              i === 'youtubeLink' ||
+              i === 'facebookLink' ||
+              i === 'flickrLink' ||
+              i === 'instagramLink'
             ) {
               cleanList[i] = e[i]
             }
@@ -102,7 +115,7 @@ class HomeForm extends Component {
           const res = await update({
             variables: { input: cleanList }
           })
-          console.log("RES", res)
+          console.log('RES', res)
           if (res && res.data) {
             refetch()
             this.toggleSubmit()
@@ -126,9 +139,9 @@ class HomeForm extends Component {
               <div
                 className={classes.column}
                 style={{
-                  background: "rgba(0,0,0,.5)",
+                  background: 'rgba(0,0,0,.5)',
                   width: 300,
-                  margin: "25px auto"
+                  margin: '25px auto'
                 }}
               >
                 {((content && content.logo) || this.state.logo) && (
@@ -149,7 +162,7 @@ class HomeForm extends Component {
                         accept='image/*'
                         name='logo'
                         handleUpload={url =>
-                          this.handleUpload(url, "logo", change, blur)
+                          this.handleUpload(url, 'logo', change, blur)
                         }
                       />
                     )}
@@ -158,47 +171,53 @@ class HomeForm extends Component {
               </div>
               <div className={classes.column}>
                 <Typography component='h3' variant='h3'>
-                  Imagem de capa
+                  Imagens de capa
                 </Typography>
               </div>
               <div
                 className={classes.column}
                 style={{
                   maxWidth: 600,
-                  margin: "25px auto"
+                  margin: '25px auto'
                 }}
               >
-                {((content && content.headerImage) ||
-                  this.state.headerImage) && (
-                  <AnyImage
-                    src={this.state.headerImage || content.headerImage}
-                    size='550px'
-                  />
-                )}
-                {!this.state.headerImage &&
-                  !(content && content.headerImage) && (
-                    <h4>Sem imagem de capa...</h4>
-                  )}
+                {headerImages.map((image, key) => (
+                  <AnyImage src={image} size='250px' key={key} />
+                ))}
+                {headerImages.length === 0 && <h4>Sem imagem de capa...</h4>}
               </div>
               <div className={classNames(classes.column, classes.helper)}>
                 <Typography variant='caption'>
-                  Suba uma imagem para atualizar a imagem de capa
+                  Suba as imagens na ordem em que gostaria que apareçam na tela
+                  de início
                   <br />
-                  <Field name='headerImage'>
-                    {fieldprops => (
-                      <Upload
-                        {...fieldprops}
-                        accept='image/*'
-                        name='headerImage'
-                        handleUpload={url =>
-                          this.handleUpload(url, "headerImage", change, blur)
-                        }
-                      />
-                    )}
-                  </Field>
+                  <div className='slider-upload'>
+                    <Field name='headerImages'>
+                      {fieldprops => (
+                        <Upload
+                          {...fieldprops}
+                          accept='image/*'
+                          name='headerImages'
+                          handleUpload={url =>
+                            this.handleUpload(url, 'headerImages', change, blur)
+                          }
+                        />
+                      )}
+                    </Field>
+                    <Button
+                      size='small'
+                      onClick={() =>
+                        this.setState({
+                          headerImages: []
+                        })
+                      }
+                    >
+                      Limpar
+                    </Button>
+                  </div>
                 </Typography>
               </div>
-              <div style={{ flexBasis: "100%" }}>
+              <div style={{ flexBasis: '100%' }}>
                 <div className={classes.full}>
                   <Field
                     name='title'
@@ -263,7 +282,7 @@ class HomeForm extends Component {
                   type='submit'
                   disabled={pristine || invalid}
                 >
-                  {this.state.submitting ? <Loading /> : ""}
+                  {this.state.submitting ? <Loading /> : ''}
                   Salvar
                 </Button>
               </div>
@@ -272,6 +291,10 @@ class HomeForm extends Component {
               img {
                 max-width: 150px;
                 max-height: 150px;
+              }
+              .slider-upload {
+                display: flex;
+                flex-flow: row nowrap;
               }
             `}</style>
           </form>

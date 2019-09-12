@@ -3,7 +3,7 @@ query {
     id
     createdAt
     updatedAt
-    headerImage
+    headerImages
     title
     subTitle
     logo
