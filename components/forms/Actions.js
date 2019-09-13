@@ -23,7 +23,9 @@ const doSave = async ({
   // console.log('RES', res)
   if (res && res.data) {
     setSubmitting(false)
-    Router.push(`${goBackUrl}?refresh`)
+    if (goBackUrl) {
+      Router.push(`${goBackUrl}?refresh`)
+    }
   }
 }
 
@@ -101,9 +103,11 @@ export default props => {
   return (
     <div>
       <SaveButton {...props} setError={setError} />
-      <Button size='small' onClick={() => Router.push(props.goBackUrl)}>
-        Cancelar
-      </Button>
+      {props.goBackUrl && (
+        <Button size='small' onClick={() => Router.push(props.goBackUrl)}>
+          Cancelar
+        </Button>
+      )}
       {props.isEdit && <RemoveButton {...props} setError={setError} />}
       {error && <Error errors={error} />}
     </div>

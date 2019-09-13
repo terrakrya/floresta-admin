@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button'
 import Loading from '../Loading'
 import Error from '../Error'
 
+const defaultMaxFileLimit = 1.5
+
 const styles = theme => ({
   button: {
     margin: theme.spacing(1)
@@ -46,7 +48,7 @@ const Upload = ({
                   Object.keys(files).map(async fileKey => {
                     const file = files[fileKey]
                     const fileSize = (file.size / 1024 / 1024).toFixed(4) // MB
-                    if (fileSize < (fileSizeLimit || 1)) {
+                    if (fileSize < (fileSizeLimit || defaultMaxFileLimit)) {
                       setUpload(true)
                       await upload({ variables: { file } })
                         .then(res => {
@@ -61,7 +63,7 @@ const Upload = ({
                         })
                     } else {
                       urlList.error = `O arquivo excede o limite de 1Mb por ${fileSize -
-                        (fileSizeLimit || 1)}Mb.`
+                        (fileSizeLimit || defaultMaxFileLimit)}Mb.`
                     }
                   })
                 ).then(i => {

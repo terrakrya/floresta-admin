@@ -9,6 +9,7 @@ import Divider from '@material-ui/core/Divider'
 import Paper from '@material-ui/core/Paper'
 import Upload from './Upload'
 import Loading from '../Loading'
+import Actions from './Actions'
 import AnyImage from '../AnyImage'
 import OutlineTextField from './OutlineTextField'
 
@@ -58,7 +59,7 @@ class HomeForm extends Component {
 
   clearUpload = () =>
     this.setState({
-      logo: null,
+      logo: null
       // headerImages: []
     })
 
@@ -76,10 +77,12 @@ class HomeForm extends Component {
     this.setState({ ...this.state, [field]: upload })
   }
 
-  componentDidMount() {
-    if (this.props.content &&  this.props.content.headerImages ) {
+  componentDidMount () {
+    if (this.props.content && this.props.content.headerImages) {
       this.setState({
-        headerImages: this.props.content.headerImages.concat(this.state.headerImages)
+        headerImages: this.props.content.headerImages.concat(
+          this.state.headerImages
+        )
       })
     }
   }
@@ -93,41 +96,41 @@ class HomeForm extends Component {
         elevation={1}
         initialValues={content}
         onSubmit={async e => {
-          this.toggleSubmit()
-          let cleanList = {}
-          Object.keys(e).map(i => {
-            if (Array.isArray(e[i]) && e[i].length > 0) {
-              cleanList[i] = e[i]
-            } else if (
-              (!Array.isArray(e[i]) && e[i] !== null && i === 'logo') ||
-              i === 'headerImages' ||
-              i === 'subTitle' ||
-              i === 'title' ||
-              i === 'youtubeLink' ||
-              i === 'facebookLink' ||
-              i === 'flickrLink' ||
-              i === 'instagramLink'
-            ) {
-              cleanList[i] = e[i]
-            }
-          })
-          console.log(cleanList)
-          const res = await update({
-            variables: { input: cleanList }
-          })
-          console.log('RES', res)
-          if (res && res.data) {
-            refetch()
-            this.toggleSubmit()
-            this.clearUpload()
-          }
+          // this.toggleSubmit()
+          // let cleanList = {}
+          // Object.keys(e).map(i => {
+          //   if (Array.isArray(e[i]) && e[i].length > 0) {
+          //     cleanList[i] = e[i]
+          //   } else if (
+          //     (!Array.isArray(e[i]) && e[i] !== null && i === 'logo') ||
+          //     i === 'headerImages' ||
+          //     i === 'subTitle' ||
+          //     i === 'title' ||
+          //     i === 'youtubeLink' ||
+          //     i === 'facebookLink' ||
+          //     i === 'flickrLink' ||
+          //     i === 'instagramLink'
+          //   ) {
+          //     cleanList[i] = e[i]
+          //   }
+          // })
+          // console.log(cleanList)
+          // const res = await update({
+          //   variables: { input: cleanList }
+          // })
+          // console.log('RES', res)
+          // if (res && res.data) {
+          //   refetch()
+          //   this.toggleSubmit()
+          //   this.clearUpload()
+          // }
         }}
         validate={validate}
         render={({
           handleSubmit,
           pristine,
           invalid,
-          form: { change, blur }
+          form: { change, blur, getState }
         }) => (
           <form onSubmit={handleSubmit}>
             <Paper>
@@ -275,7 +278,35 @@ class HomeForm extends Component {
               </div>
               <Divider />
               <div className={classes.column}>
-                <Button size='small'>Cancel</Button>
+                <Actions
+                  save={update}
+                  saveVariables={(() => {
+                    // this.toggleSubmit()
+                    const input = getState().values
+                    let cleanVars = {}
+                    Object.keys(input).map(i => {
+                      if (Array.isArray(input[i]) && input[i].length > 0) {
+                        cleanVars[i] = input[i]
+                      } else if (
+                        (!Array.isArray(input[i]) &&
+                          input[i] !== null &&
+                          i === 'logo') ||
+                        i === 'headerImages' ||
+                        i === 'subTitle' ||
+                        i === 'title' ||
+                        i === 'youtubeLink' ||
+                        i === 'facebookLink' ||
+                        i === 'flickrLink' ||
+                        i === 'instagramLink'
+                      ) {
+                        cleanVars[i] = input[i]
+                      }
+                    })
+                    return { input: cleanVars }
+                  })()}
+                  pristine={getState().pristine}
+                />
+                {/* <Button size='small'>Cancel</Button>
                 <Button
                   size='small'
                   color='primary'
@@ -284,7 +315,7 @@ class HomeForm extends Component {
                 >
                   {this.state.submitting ? <Loading /> : ''}
                   Salvar
-                </Button>
+                </Button> */}
               </div>
             </Paper>
             <style jsx>{`
