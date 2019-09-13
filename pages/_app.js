@@ -1,4 +1,4 @@
-import App, { Container } from "next/app"
+import App from "next/app"
 import React from "react"
 import { ApolloProvider } from "react-apollo"
 import Router from "next/router"
@@ -38,22 +38,20 @@ class Admin extends App {
   render() {
     const { Component, pageProps, apolloClient } = this.props
     return (
-      <Container>
-        <ApolloProvider client={apolloClient}>
-          <ThemeProvider theme={theme}>
-            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-            <CssBaseline />
-            <StateContext.Provider
-              value={{
-                setPreviousPagePath: this.setPreviousPagePath,
-                previousPagePath: this.state.previousPagePath
-              }}
-            >
-              <Component {...pageProps} />
-            </StateContext.Provider>
-          </ThemeProvider>
-        </ApolloProvider>
-      </Container>
+      <ApolloProvider client={apolloClient}>
+        <ThemeProvider theme={theme}>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          <StateContext.Provider
+            value={{
+              setPreviousPagePath: this.setPreviousPagePath,
+              previousPagePath: this.state.previousPagePath
+            }}
+          >
+            <Component {...pageProps} />
+          </StateContext.Provider>
+        </ThemeProvider>
+      </ApolloProvider>
     )
   }
 }
