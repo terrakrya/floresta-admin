@@ -306,16 +306,6 @@ class HomeForm extends Component {
                   })()}
                   pristine={getState().pristine}
                 />
-                {/* <Button size='small'>Cancel</Button>
-                <Button
-                  size='small'
-                  color='primary'
-                  type='submit'
-                  disabled={pristine || invalid}
-                >
-                  {this.state.submitting ? <Loading /> : ''}
-                  Salvar
-                </Button> */}
               </div>
             </Paper>
             <style jsx>{`
