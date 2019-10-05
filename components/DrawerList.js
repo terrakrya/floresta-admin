@@ -31,7 +31,7 @@ const DrawerList = ({ classes, email, name, router: { pathname } }) => (
           {!name && email && email}
         </div>
         <Divider />
-        <Link prefetch href='/'>
+        <Link href='/'>
           <ListItem button disabled={pathname === "/"}>
             <ListItemIcon>
               <ContentIcon />
@@ -39,7 +39,7 @@ const DrawerList = ({ classes, email, name, router: { pathname } }) => (
             <ListItemText primary={"Home"} />
           </ListItem>
         </Link>
-        <Link prefetch href='/about'>
+        <Link href='/about'>
           <ListItem button disabled={pathname === "/about"}>
             <ListItemIcon>
               <AboutIcon />
@@ -47,7 +47,7 @@ const DrawerList = ({ classes, email, name, router: { pathname } }) => (
             <ListItemText primary={"Quem somos"} />
           </ListItem>
         </Link>
-        <Link prefetch href='/villages'>
+        <Link href='/villages'>
           <ListItem button disabled={pathname === "/villages"}>
             <ListItemIcon>
               <VillageIcon />
@@ -55,7 +55,7 @@ const DrawerList = ({ classes, email, name, router: { pathname } }) => (
             <ListItemText primary={"Aldeias"} />
           </ListItem>
         </Link>
-        <Link prefetch href='/categories'>
+        <Link href='/categories'>
           <ListItem button disabled={pathname === "/categories"}>
             <ListItemIcon>
               <CategoriesIcon />
@@ -63,7 +63,7 @@ const DrawerList = ({ classes, email, name, router: { pathname } }) => (
             <ListItemText primary={"Linhas de açÃo"} />
           </ListItem>
         </Link>
-        <Link prefetch href='/tags'>
+        <Link href='/tags'>
           <ListItem button disabled={pathname === "/tags"}>
             <ListItemIcon>
               <TagsIcon />
@@ -71,7 +71,7 @@ const DrawerList = ({ classes, email, name, router: { pathname } }) => (
             <ListItemText primary={"Tags"} />
           </ListItem>
         </Link>
-        <Link prefetch href='/projects'>
+        <Link href='/projects'>
           <ListItem button disabled={pathname === "/projects"}>
             <ListItemIcon>
               <ProjectIcon />
@@ -79,7 +79,7 @@ const DrawerList = ({ classes, email, name, router: { pathname } }) => (
             <ListItemText primary={"Projetos"} />
           </ListItem>
         </Link>
-        <Link prefetch href='/news'>
+        <Link href='/news'>
           <ListItem button disabled={pathname === "/news"}>
             <ListItemIcon>
               <NewsIcon />
@@ -89,7 +89,7 @@ const DrawerList = ({ classes, email, name, router: { pathname } }) => (
         </Link>
         <Divider />
         <List>
-          {/* <Link prefetch href='/'>
+          {/* <Link href='/'>
             <ListItem button disabled={pathname === "/"}>
               <ListItemIcon>
                 <DashboardIcon />
@@ -97,14 +97,14 @@ const DrawerList = ({ classes, email, name, router: { pathname } }) => (
               <ListItemText primary={"Painel"} />
             </ListItem>
           </Link> */}
-          {/* <Link prefetch href='/analytics'>
+          {/* <Link href='/analytics'>
             <ListItem button disabled={pathname === '/analytics'}>
               <ListItemIcon><AnalyticsIcon /></ListItemIcon>
               <ListItemText primary={"Analítica"} />
             </ListItem>
           </Link>
           <Divider /> */}
-          <Link prefetch href='/admins'>
+          <Link href='/admins'>
             <ListItem button disabled={pathname === "/admins"}>
               <ListItemIcon>
                 <AdminIcon />
