@@ -6,6 +6,11 @@ query($id: ID) {
    link
    title
    media
+   tags {
+     id
+     name
+     slug
+   }
    post {
      id
      author {

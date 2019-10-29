@@ -6,5 +6,10 @@ mutation($input: NewsInput!) {
     title
     media
     intro
+    tags {
+     id
+     name
+     slug
+   }
   }
 }

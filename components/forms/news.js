@@ -6,10 +6,12 @@ import classNames from 'classnames'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Radio from '@material-ui/core/Radio'
+import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import Upload from './Upload'
 import OutlineTextField from './OutlineTextField'
 import Actions from './Actions'
+import MultiSelect from './MultiSelect'
 
 const validate = values => {
   const errors = {}
@@ -50,13 +52,36 @@ const styles = theme => ({
   }
 })
 
-const NewsForm = ({ classes, update, data, remove, client, create }) => {
+const NewsForm = ({
+  classes,
+  update,
+  data,
+  remove,
+  client,
+  create,
+  tagList
+}) => {
   const goBackUrl = '/news'
   const [selectedMode, setSelectedMode] = useState('link')
 
-  const [uploadedImage, setUpload] = useState(
-    data && data.media ? data.media : null
+  const [uploadedImage, setUpload] = useState((data && data.media) || null)
+  const [tags, setSelectTag] = useState(
+    (data && data.tags.map(t => t.name)) || []
   )
+  const handleSelectTag = (newTags, change, blur) => {
+    let tagIds = []
+    tagList.map(t =>
+      newTags.map(nt => {
+        if (t.name === nt) {
+          tagIds.push(t.id)
+        }
+      })
+    )
+    blur('tags')
+    change('tags', tagIds)
+    setSelectTag(newTags)
+  }
+
   const handleModeChange = e => {
     setSelectedMode(e.target.value)
   }
@@ -122,6 +147,27 @@ const NewsForm = ({ classes, update, data, remove, client, create }) => {
                 component={OutlineTextField}
                 inputType={'text'}
               />
+            </div>
+            <Typography component='h5' variant='h5'>
+              Tags
+            </Typography>
+            <div className={classes.column}>
+              <Field name='tags'>
+                {fieldprops => (
+                  <MultiSelect
+                    {...fieldprops}
+                    label={'Selectione as tags deste projeto'}
+                    items={tagList}
+                    name='tags'
+                    create={'Criar nova tag'}
+                    createAction={() => Router.push(`/tag_edit`)}
+                    setSelected={e =>
+                      handleSelectTag(e.target.value, change, blur)
+                    }
+                    selected={tags || []}
+                  />
+                )}
+              </Field>
             </div>
             {selectedMode === 'post' && (
               <span className='author'>
@@ -215,7 +261,7 @@ const NewsForm = ({ classes, update, data, remove, client, create }) => {
               removeVariables={data ? { id: data.id } : {}}
               remove={remove}
               isEdit={!!data}
-              pristine={getState().pristine}
+              pristine={pristine}
             />
           </form>
         )}

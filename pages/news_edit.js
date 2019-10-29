@@ -1,13 +1,14 @@
-import React from "react"
-import { Query, Mutation } from "react-apollo"
-import { withRouter } from "next/router"
+import React from 'react'
+import { Query, Mutation } from 'react-apollo'
+import { withRouter } from 'next/router'
 
-import SAVE_NEWS from "../queries/saveNews.gql"
-import REMOVE_NEWS from "../queries/removeNews.gql"
-import NEWS from "../queries/news.gql"
-import NewsForm from "../components/forms/news"
-import App from "../components/App"
-import Loading from "../components/Loading"
+import SAVE_NEWS from '../queries/saveNews.gql'
+import REMOVE_NEWS from '../queries/removeNews.gql'
+import NEWS from '../queries/news.gql'
+import TAGS from '../queries/tags.gql'
+import NewsForm from '../components/forms/news'
+import App from '../components/App'
+import Loading from '../components/Loading'
 
 const NewsEdit = ({
   router: {
@@ -26,27 +27,42 @@ const NewsEdit = ({
       {(slug || id) && (
         <Query query={NEWS} variables={{ id }}>
           {({ loading, error, data }) => (
-            <Mutation mutation={SAVE_NEWS}>
-              {(saveNews, { error: errorSaveNews, client: clientSaveNews }) => (
-                <Mutation mutation={REMOVE_NEWS}>
+            <Query query={TAGS}>
+              {({ loading: loadingTags, error: errorTags, data: dataTags }) => (
+                <Mutation mutation={SAVE_NEWS}>
                   {(
-                    removeNews,
-                    { error: errorRemoveNews, client: clientRemoveNews }
-                  ) => {
-                    if (!loading && !error && data) {
-                      return (
-                        <NewsForm
-                          update={saveNews}
-                          remove={removeNews}
-                          data={data.news}
-                          client={clientSaveNews}
-                        />
-                      )
-                    } else return <Loading />
-                  }}
+                    saveNews,
+                    { error: errorSaveNews, client: clientSaveNews }
+                  ) => (
+                    <Mutation mutation={REMOVE_NEWS}>
+                      {(
+                        removeNews,
+                        { error: errorRemoveNews, client: clientRemoveNews }
+                      ) => {
+                        if (
+                          !loading &&
+                          !loadingTags &&
+                          !error &&
+                          !errorTags &&
+                          dataTags &&
+                          data
+                        ) {
+                          return (
+                            <NewsForm
+                              update={saveNews}
+                              remove={removeNews}
+                              data={data.news}
+                              tagList={dataTags.projectTags}
+                              client={clientSaveNews}
+                            />
+                          )
+                        } else return <Loading />
+                      }}
+                    </Mutation>
+                  )}
                 </Mutation>
               )}
-            </Mutation>
+            </Query>
           )}
         </Query>
       )}

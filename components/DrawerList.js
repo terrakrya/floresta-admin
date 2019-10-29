@@ -89,21 +89,6 @@ const DrawerList = ({ classes, email, name, router: { pathname } }) => (
         </Link>
         <Divider />
         <List>
-          {/* <Link href='/'>
-            <ListItem button disabled={pathname === "/"}>
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Painel"} />
-            </ListItem>
-          </Link> */}
-          {/* <Link href='/analytics'>
-            <ListItem button disabled={pathname === '/analytics'}>
-              <ListItemIcon><AnalyticsIcon /></ListItemIcon>
-              <ListItemText primary={"Analítica"} />
-            </ListItem>
-          </Link>
-          <Divider /> */}
           <Link href='/admins'>
             <ListItem button disabled={pathname === "/admins"}>
               <ListItemIcon>
