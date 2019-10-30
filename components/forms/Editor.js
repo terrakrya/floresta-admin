@@ -1,17 +1,21 @@
-import dynamic from "next/dynamic"
-import { useState } from "react"
-import { Mutation } from "react-apollo"
-import UPLOAD_FILE from "../../queries/uploadFile.gql"
-const ReactQuill = dynamic(() => import("react-quill"), {
+import dynamic from 'next/dynamic'
+import { useState } from 'react'
+import { Mutation } from 'react-apollo'
+import UPLOAD_FILE from '../../queries/uploadFile.gql'
+const ReactQuill = dynamic(() => import('react-quill'), {
   ssr: false
 })
 
-function dataURLtoFile(dataurl, filename) {
-  var arr = dataurl.split(","),
-    mime = arr[0].match(/:(.*?);/)[1],
-    bstr = atob(arr[1]),
-    n = bstr.length,
-    u8arr = new Uint8Array(n)
+function dataURLtoFile (dataurl, filename) {
+  var arr = dataurl.split(',')
+
+  var mime = arr[0].match(/:(.*?);/)[1]
+
+  var bstr = atob(arr[1])
+
+  var n = bstr.length
+
+  var u8arr = new Uint8Array(n)
   while (n--) {
     u8arr[n] = bstr.charCodeAt(n)
   }
@@ -47,7 +51,7 @@ const hashCode = string => {
 // toolbar.addHandler('image', showImageUI);
 
 const imageHandler = () => {
-  const { Quill } = require("react-quill")
+  const { Quill } = require('react-quill')
   console.log(Quill.registerModule)
   // var range = Quill.getSelection().index
   // console.log("RANGE", range)
@@ -56,21 +60,27 @@ const imageHandler = () => {
   //   this.quillRef.getEditor().insertEmbed(range.index, "image", value, "user")
   // }
 }
+var toolbarOptions = [
+  ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+  ['blockquote', 'code-block'],
 
+  [{ header: 1 }, { header: 2 }], // custom button values
+  [{ list: 'ordered' }, { list: 'bullet' }],
+  [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+  [{ direction: 'rtl' }], // text direction
+  [{ align: [] }],
+
+  [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
+  [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+  [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+  ['link', 'image', 'video'],
+
+  ['clean'] // remove formatting button
+]
 const modules = {
   toolbar: {
-    container: [
-      [{ header: [1, 2, false] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" }
-      ],
-      ["link", "image", "video"],
-      ["clean"]
-    ],
+    container: toolbarOptions,
     handlers: {
       // image: () => imageHandler()
     }
@@ -78,18 +88,22 @@ const modules = {
 }
 
 const formats = [
-  "header",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "indent",
-  "link",
-  "image",
-  "video"
+  'header',
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'blockquote',
+  'color',
+  'background',
+  'list',
+  'bullet',
+  'indent',
+  'align',
+  'size',
+  'link',
+  'image',
+  'video'
 ]
 
 export default ({ onEditorStateChange, value, height, maxLength, name }) => {
@@ -108,10 +122,13 @@ export default ({ onEditorStateChange, value, height, maxLength, name }) => {
                   .map(c => c.insert.image)
                   .map(async image => {
                     const imageName = hashCode(image)
-                    const isBase64 = image.split("image/")
+                    const isBase64 = image.split('image/')
                     if (isBase64[1]) {
-                      const format = isBase64[1].split(";")[0]
-                      const file = dataURLtoFile(image, `${imageName}.${format}`)
+                      const format = isBase64[1].split(';')[0]
+                      const file = dataURLtoFile(
+                        image,
+                        `${imageName}.${format}`
+                      )
                       await upload({
                         variables: {
                           file
@@ -128,7 +145,7 @@ export default ({ onEditorStateChange, value, height, maxLength, name }) => {
                       })
                     }
                   })
-  
+
                 return onEditorStateChange(content)
               }
             }}
@@ -137,7 +154,7 @@ export default ({ onEditorStateChange, value, height, maxLength, name }) => {
             value={value}
             modules={modules}
             formats={formats}
-            style={{ height: height, padding: "30px 0" }}
+            style={{ height: height, padding: '30px 0' }}
           />
         )}
       </Mutation>
