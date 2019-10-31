@@ -232,6 +232,15 @@ class HomeForm extends Component {
                 </div>
                 <div className={classes.full}>
                   <Field
+                    name='email'
+                    component={OutlineTextField}
+                    inputType='text'
+                    label='E-mail'
+                    fullWidth
+                  />
+                </div>
+                <div className={classes.full}>
+                  <Field
                     name='subTitle'
                     component={OutlineTextField}
                     inputType='text'
@@ -294,6 +303,7 @@ class HomeForm extends Component {
                         i === 'headerImages' ||
                         i === 'subTitle' ||
                         i === 'title' ||
+                        i === 'email' ||
                         i === 'youtubeLink' ||
                         i === 'facebookLink' ||
                         i === 'flickrLink' ||

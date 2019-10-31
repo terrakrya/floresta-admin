@@ -7,6 +7,7 @@ mutation($input: ContentInput!) {
     title
     subTitle
     logo
+    email
     aboutHtml
     villageHtml
     projectsHtml
