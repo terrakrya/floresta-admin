@@ -53,7 +53,7 @@ const styles = theme => ({
 const contentForm = ({ classes, update, title, field, client, style }) => {
   const [submitting, toggleSubmit] = useState(false)
   const onEditorStateChange = (editor, change, blur) => {
-    blur(field)
+    // blur(field)
     change(field, editor)
   }
   return (

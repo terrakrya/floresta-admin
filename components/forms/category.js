@@ -60,7 +60,7 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
   const [uploadedImages, setUpload] = React.useState(initialImages)
   const clearUpload = () => setUpload({ icon: null, media: null })
   const handleUpload = (type, uploaded, change, blur) => {
-    blur(type)
+    // blur(type)
     change(type, uploaded[0])
     setUpload({
       ...uploadedImages,
@@ -69,7 +69,7 @@ const CategoryForm = ({ classes, update, data, remove, client }) => {
   }
 
   const onEditorStateChange = (editor, field, change, blur) => {
-    blur(field)
+    // blur(field)
     change(field, editor)
   }
   return (

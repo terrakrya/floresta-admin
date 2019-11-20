@@ -64,13 +64,13 @@ const TagForm = ({
   const clearUpload = () => setUpload([])
 
   const handleUpload = (uploaded, change, blur) => {
-    blur("media")
+    // blur("media")
     change("media", uploaded[0])
     setUpload(uploaded[0])
   }
 
   const onEditorStateChange = (editor, type, change, blur) => {
-    blur(type)
+    // blur(type)
     change(type, editor)
   }
   return (

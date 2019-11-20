@@ -56,7 +56,7 @@ const AdminForm = ({ classes, update, data, error }) => {
   const [formState, setFormState] = React.useState(data ? data.role : roles[0])
   const handleSelect = (e, change, blur) => {
     console.log("e", e)
-    blur("role")
+    // blur("role")
     change("role", e)
     setFormState(e)
   }

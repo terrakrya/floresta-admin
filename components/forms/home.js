@@ -68,7 +68,7 @@ class HomeForm extends Component {
   }
 
   handleUpload = (uploaded, field, change, blur) => {
-    blur(field)
+    // blur(field)
     const upload =
       field === 'headerImages'
         ? this.state.headerImages.concat(uploaded)

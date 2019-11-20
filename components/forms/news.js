@@ -77,7 +77,7 @@ const NewsForm = ({
         }
       })
     )
-    blur('tags')
+    // blur('tags')
     change('tags', tagIds)
     setSelectTag(newTags)
   }
@@ -86,12 +86,12 @@ const NewsForm = ({
     setSelectedMode(e.target.value)
   }
   const handleUpload = (uploaded, change, blur) => {
-    blur('media')
+    // blur('media')
     change('media', uploaded[0])
     setUpload(uploaded[0])
   }
   const onEditorStateChange = (editor, field, change, blur) => {
-    blur(field)
+    // blur(field)
     change(field, editor)
   }
   useEffect(

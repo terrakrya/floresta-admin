@@ -58,19 +58,19 @@ const VillageForm = ({ classes, update, data, remove, client }) => {
   const [uploadedPhotos, setPhotosUpload] = React.useState(initialPhotos)
 
   const handleUpload = (uploaded, change, blur) => {
-    blur("media")
+    // blur("media")
     change("media", uploaded[0])
     setUpload(uploaded[0])
   }
   const handlePhotosUpload = (uploaded, change, blur) => {
     const newList = uploadedPhotos.concat(uploaded)
-    blur("photos")
+    // blur("photos")
     change("photos", newList)
     setPhotosUpload(newList)
   }
 
   const onEditorStateChange = (editor, type, change, blur) => {
-    blur(type)
+    // blur(type)
     change(type, editor)
   }
 
