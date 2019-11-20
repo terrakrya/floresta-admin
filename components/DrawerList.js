@@ -11,7 +11,7 @@ import CategoriesIcon from "@material-ui/icons/CallSplitOutlined"
 import AdminIcon from "@material-ui/icons/PeopleOutlineOutlined"
 import ProjectIcon from "@material-ui/icons/AssignmentOutlined"
 import VillageIcon from "@material-ui/icons/WallpaperOutlined"
-import AnalyticsIcon from "@material-ui/icons/PollOutlined"
+import UploadIcon from "@material-ui/icons/InsertDriveFileOutlined"
 import TagsIcon from "@material-ui/icons/StyleOutlined"
 import ContentIcon from "@material-ui/icons/PersonalVideoOutlined"
 import NewsIcon from "@material-ui/icons/PictureInPictureOutlined"
@@ -85,6 +85,14 @@ const DrawerList = ({ classes, email, name, router: { pathname } }) => (
               <NewsIcon />
             </ListItemIcon>
             <ListItemText primary={"Notícias"} />
+          </ListItem>
+        </Link>
+        <Link href='/files'>
+          <ListItem button disabled={pathname === "/files"}>
+            <ListItemIcon>
+              <UploadIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Arquivos"} />
           </ListItem>
         </Link>
         <Divider />
