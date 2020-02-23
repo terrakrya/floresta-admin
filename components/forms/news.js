@@ -169,7 +169,7 @@ const NewsForm = ({
                 )}
               </Field>
             </div>
-            {selectedMode === 'post' && (
+            {selectedMode === 'post' && data.post.author && (
               <span className='author'>
                 {data &&
                   `por ${data.post.author.firstName} ${
