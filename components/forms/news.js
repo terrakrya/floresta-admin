@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import Upload from './Upload'
 import OutlineTextField from './OutlineTextField'
+import Select from './Select'
 import Actions from './Actions'
 import MultiSelect from './MultiSelect'
 
@@ -59,7 +60,8 @@ const NewsForm = ({
   remove,
   client,
   create,
-  tagList
+  tagList,
+  orderList
 }) => {
   const goBackUrl = '/news'
   const [selectedMode, setSelectedMode] = useState('link')
@@ -82,6 +84,10 @@ const NewsForm = ({
     setSelectTag(newTags)
   }
 
+  const handleSelectOrder = (e, change, blur) => {
+    change('order', e)
+  }
+
   const handleModeChange = e => {
     setSelectedMode(e.target.value)
   }
@@ -94,15 +100,12 @@ const NewsForm = ({
     // blur(field)
     change(field, editor)
   }
-  useEffect(
-    () => {
-      if (data && data.post) {
-        setSelectedMode('post')
-      }
-    },
-    [data]
-  )
-
+  useEffect(() => {
+    if (data && data.post) {
+      setSelectedMode('post')
+    }
+  }, [data])
+  console.log('data', data)
   return (
     <Paper className={classes.root} elevation={1}>
       <Form
@@ -140,6 +143,19 @@ const NewsForm = ({
             </div>
             <div className={classes.full}>
               <Typography component='h5' variant='h5'>
+                Ordem
+              </Typography>
+              <Select
+                name='order'
+                component={Select}
+                label={'Selecione a ordem dessa notícia'}
+                items={orderList}
+                setSelected={value => handleSelectOrder(value, change, blur)}
+                selected={getState().values.order || data.order.toString()}
+              />
+            </div>
+            <div className={classes.full}>
+              <Typography component='h5' variant='h5'>
                 Título {selectedMode === 'link' ? 'da notícia' : 'do post'}
               </Typography>
               <Field
@@ -169,12 +185,10 @@ const NewsForm = ({
                 )}
               </Field>
             </div>
-            {selectedMode === 'post' && data.post.author && (
+            {selectedMode === 'post' && data.post && data.post.author && (
               <span className='author'>
                 {data &&
-                  `por ${data.post.author.firstName} ${
-                    data.post.author.lastName
-                  }`}
+                  `por ${data.post.author.firstName} ${data.post.author.lastName}`}
               </span>
             )}
             <div className={classes.column}>
@@ -247,6 +261,9 @@ const NewsForm = ({
                 const input = getState().values
                 const cleanVars = {}
                 Object.keys(input).map(i => {
+                  if (i === 'order') {
+                    Object.assign(cleanVars, { [i]: parseInt(input[i]) })
+                  }
                   if (i !== '__typename') {
                     Object.assign(cleanVars, { [i]: input[i] })
                   }
