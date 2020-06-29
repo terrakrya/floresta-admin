@@ -47,7 +47,7 @@ const Upload = ({
                 Promise.all(
                   Object.keys(files).map(async fileKey => {
                     const file = files[fileKey]
-                    const fileSize = (file.size / 1024 / 1024).toFixed(4) // MB
+                    const fileSize = (file.size / 3000 / 3000).toFixed(4) // MB
                     if (fileSize < (fileSizeLimit || defaultMaxFileLimit)) {
                       setUpload(true)
                       await upload({ variables: { file } })
