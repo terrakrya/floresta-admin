@@ -19,19 +19,23 @@ const NewsEdit = ({
   }
 }) => {
   const orderList = useQuery(NEWSORDERS)
+  console.log('orderList');
+  console.log(orderList.data);
   return (
     <App>
       {!slug && !id && (
         <Mutation mutation={SAVE_NEWS}>
           {(saveNews, { error: errorSaveNews, client: clientSaveNews }) => {
-            return (
-              <NewsForm
-                orderList={orderList.data.newsAll.filter(i => i.order !== null)}
-                update={saveNews}
-                client={clientSaveNews}
-                create
-              />
-            )
+            if (!orderList.loading && !orderList.error && orderList.data) {
+              return (
+                <NewsForm
+                  orderList={orderList.data.newsAll.filter(i => i.order !== null)}
+                  update={saveNews}
+                  client={clientSaveNews}
+                  create
+                />
+              )
+            } else return <Loading />
           }}
         </Mutation>
       )}

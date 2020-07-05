@@ -151,7 +151,7 @@ const NewsForm = ({
                 label={'Selecione a ordem dessa notícia'}
                 items={orderList}
                 setSelected={value => handleSelectOrder(value, change, blur)}
-                selected={getState().values.order || data.order.toString()}
+                selected={getState().values.order || (data && data.order ? data.order.toString() : null)}
               />
             </div>
             <div className={classes.full}>
