@@ -1,6 +1,7 @@
 import React from "react"
 import Router from "next/router"
 import classNames from "classnames"
+import { Document } from 'react-pdf'
 
 import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
@@ -29,6 +30,7 @@ export default ({
   dialogOpen,
   handleDialogClose,
   handlePhotosUpload,
+  handlePdfsUpload,
   handleMediaUpload,
   handleEditor,
   handleClickOpen,
@@ -69,6 +71,9 @@ export default ({
       }
       if (!formState.photos && data.photos.length > 0) {
         handlePhotosUpload(data.photos)
+      }
+      if (!formState.pdfs && data.pdfs.length > 0) {
+        handlePhotosUpload(data.pdfs)
       }
       if (
         formState.description === initialState.description &&
@@ -260,6 +265,51 @@ export default ({
               handleUpload={urls => {
                 handlePhotosUpload(
                   formState.photos ? formState.photos.concat(urls) : urls
+                )
+              }}
+            />
+          </Typography>
+        </div>
+        <Divider />
+        <div className={classes.column}>
+          <Typography component='h4' variant='h4'>
+            PDFs
+          </Typography>
+        </div>
+        <div className={classes.column}>
+          {formState.pdfs &&
+            formState.pdfs.map(pdf => (
+              <div key={pdf} className={"photo-list"}>
+                <Document file={pdf} />
+                <a href={pdf} target="_blank">Baixar PDF</a>
+                <Button
+                  className='photo-list-button'
+                  size='small'
+                  onClick={async () => {
+                    handlePdfsUpload(
+                      formState.pdfs.filter(i => i !== pdf)
+                    )
+                  }}
+                >
+                  Remover
+                </Button>
+              </div>
+            ))}
+          {formState.pdfs && formState.pdfs.length === 0 && (
+            <h4>Este projeto não tem imagens</h4>
+          )}
+        </div>
+        <div className={classNames(classes.column, classes.helper)}>
+          <Typography variant='caption'>
+            PDFs do projeto
+            <br />
+            <Upload
+              name='upload-pdfs'
+              multiple={true}
+              accept='application/pdf'
+              handleUpload={urls => {
+                handlePdfsUpload(
+                  formState.pdfs ? formState.pdfs.concat(urls) : urls
                 )
               }}
             />

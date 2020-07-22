@@ -14,8 +14,9 @@ query($slug: String $id: ID) {
    name
    slug
    photos
+   pdfs
    media
    intro
    description
- }  
+ }
 }

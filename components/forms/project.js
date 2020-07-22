@@ -69,7 +69,8 @@ const ProjectForm = ({
     name: '',
     description: '',
     intro: '',
-    photos: null
+    photos: null,
+    pdfs: null
   }
   const [formState, setFormState] = React.useState(initialState)
   const handleInput = (key, input) => {
@@ -88,6 +89,10 @@ const ProjectForm = ({
 
   const handlePhotosUpload = uploaded => {
     setFormState({ ...formState, photos: uploaded })
+  }
+
+  const handlePdfsUpload = uploaded => {
+    setFormState({ ...formState, pdfs: uploaded })
   }
   // Dialogs
   function handleClickOpen (dialog) {
@@ -158,6 +163,7 @@ const ProjectForm = ({
       dialogOpen={dialogOpen}
       handleDialogClose={handleDialogClose}
       handlePhotosUpload={handlePhotosUpload}
+      handlePdfsUpload={handlePdfsUpload}
       handleMediaUpload={handleMediaUpload}
       handleClickOpen={handleClickOpen}
       handleEditor={handleEditor}
